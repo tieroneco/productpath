@@ -1,0 +1,16 @@
+<?php
+namespace app\models;
+
+use yii;
+use yii\base\Model;
+
+class EntryForm extends Model{
+	public $name, $email;
+
+	public function rules(){
+		return [
+			[['name', 'email'], 'required'],
+			['email', 'email']
+		];
+	}
+}
