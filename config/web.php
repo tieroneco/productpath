@@ -8,8 +8,8 @@ $config = [
     'bootstrap' => ['log'],
     'on beforeRequest' => function($event){
         //\yii::$app->errorHandler->errorAction = null;
-        throw new \yii\web\NotFoundHttpException;
-        exit;
+        //throw new \yii\web\NotFoundHttpException;
+        //exit;
     },
     'components' => [
         'request' => [

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5438861ad666f7367e7d9ae0e539b7d0",
+    "content-hash": "d56c611681d521d9be1f67ebbd475c75",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -145,6 +145,22 @@
                 "mask",
                 "plugins"
             ]
+        },
+        {
+            "name": "bower-asset/jquery.terminal",
+            "version": "0.8.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jcubic/jquery.terminal.git",
+                "reference": "8f5407975498807076a76b83424d295091cf9600"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jcubic/jquery.terminal/zipball/8f5407975498807076a76b83424d295091cf9600",
+                "reference": "8f5407975498807076a76b83424d295091cf9600",
+                "shasum": ""
+            },
+            "type": "bower-asset-library"
         },
         {
             "name": "bower-asset/punycode",
@@ -314,6 +330,50 @@
                 "html"
             ],
             "time": "2017-03-13T06:30:53+00:00"
+        },
+        {
+            "name": "samdark/yii2-webshell",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/samdark/yii2-webshell.git",
+                "reference": "2508d8780fb0552f82f5271eb56c955761aa87cc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/samdark/yii2-webshell/zipball/2508d8780fb0552f82f5271eb56c955761aa87cc",
+                "reference": "2508d8780fb0552f82f5271eb56c955761aa87cc",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery.terminal": "~0.8.8",
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "samdark\\webshell\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Makarov",
+                    "email": "sam@rmcreative.ru"
+                }
+            ],
+            "description": "A web shell that allows to run yii console commands and create your own commands.",
+            "keywords": [
+                "console",
+                "extension",
+                "shell",
+                "webshell",
+                "yii2"
+            ],
+            "time": "2016-03-04T01:01:20+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
