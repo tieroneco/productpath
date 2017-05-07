@@ -11,7 +11,22 @@ $config = [
         //throw new \yii\web\NotFoundHttpException;
         //exit;
     },
+    'layout'=>'frontend',
     'components' => [
+        'authManager'=>[
+            'class'=> '\yii\rbac\DbManager'
+        ],
+        'assetManager'=>[
+            'bundles'=>[
+                'yii\web\JqueryAsset'=>[
+                    'sourcePath'=>null,
+                    'js'=>[
+                        'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'
+                    ]
+                ]
+            ]
+               
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'JnnOfBsGE7PSMypg9Om483A-5R7D_kaL',
@@ -31,7 +46,15 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'abhisek101088@gmail.com',
+                'password' => 'bethebest',
+                'port' => '587',
+                'encryption' => 'tls',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -48,6 +71,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'get-ideas/<filter:\w+>'=>'site/get-ideas'
             ],
         ],
         

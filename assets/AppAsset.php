@@ -15,15 +15,25 @@ use yii\web\AssetBundle;
  */
 class AppAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $basePath = '@webroot/designassets';
+    public $baseUrl = '@web/designassets';
     public $css = [
-        'css/site.css',
+        'css/admin.css',
+        'css/bootstrap.css',
+        'css/custom.css',
+        'css/jquery.minicolors.css',
+        'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800',
+        'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
     ];
     public $js = [
+        'js/bootstrap.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+       // 'yii\bootstrap\BootstrapAsset',
     ];
+    
+    public function init() {
+        
+    }
 }

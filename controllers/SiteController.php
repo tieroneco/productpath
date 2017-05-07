@@ -8,7 +8,11 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\web\Session;
 
-use app\models\LoginForm;
+use app\models\forms\RegisterForm;
+use app\models\User;
+use app\models\Site;
+
+//++ TODO DELETE
 use app\models\ContactForm;
 use app\models\EntryForm;
 
@@ -22,13 +26,18 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['logout','register'],
                 'rules' => [
                     [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions'=>['register'],
+                        'allow'=>true,
+                        'roles'=>['?']
+                    ]
                 ],
             ],
             'verbs' => [
@@ -64,10 +73,63 @@ class SiteController extends Controller
     public function actionIndex()
     {
         
-       
-        return $this->render('index');
+       return $this->render('index');
     }
-
+    
+    public function actionGetIdeas($filter){
+        \yii::$app->response->format=\yii\web\Response::FORMAT_JSON;
+        return [
+            [
+              "id"  =>1,
+              "heading" => "test",
+              "body"=>"body"  
+            ],
+            [
+              "id"  =>1,
+              "heading" => "test",
+              "body"=>"body"  
+            ]
+        ];
+    }
+    
+    /**
+     * Action register
+     */
+    public function actionRegister(){
+        $this->layout = 'register';
+        $model = new RegisterForm;
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            \yii::$app->db->transaction(function() use($model){
+                $user = new User;
+                $user->email = $model->email;
+                $user->active = 0;
+                $user->activattionKey = Yii::$app->getSecurity()->generateRandomString();
+                $user->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+                if($user->save()){
+                    
+                    $site = new Site;
+                    $site->subDomain = $model->host;
+                    $site->user_id = $user->id;
+                    $site->state = 0;
+                    $site->createdAt = date('Y-m-d H:i:s');
+                    if(!$site->save(false)){
+                        throw new \yii\base\UserException();
+                    }
+                    Yii::$app->mailer->compose('layouts/test', ['contactForm' => $model])
+                    ->setFrom('from@domain.com')
+                    ->setTo($model->email)
+                    ->setSubject("test")
+                    ->send();
+                }else{
+                    throw new \yii\base\UserException();
+                }
+                $auth= \yii::$app->getAuthManager();
+                $auth->assign($auth->getRole('admin'), $user->id);
+            }) ;
+           
+        }
+        return $this->render("register", compact('model'));
+    }
     /**
      * Login action.
      *
@@ -113,6 +175,7 @@ class SiteController extends Controller
 
             return $this->refresh();
         }
+        
         return $this->render('contact', [
             'model' => $model,
         ]);
