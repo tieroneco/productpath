@@ -7,18 +7,24 @@ use yii\widgets\ActiveForm;
         	<div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="login-logo">
-                    	<a href="#"><img src="images/logo-white.png" alt=""></a>
+                    	<a href="#"><img src="/images/logo-white.png" alt=""></a>
                     </div>
                     
                     <div class="login creat_acc-popup">
                     	<div class="login-head">
+                                <?php
+                                    if(yii::$app->session->hasFlash('registrationdone')){
+                                        ?><h2><?= yii::$app->session->getFlash('registrationdone');?></h2>
+                                <?php    }else{
+                                ?>
                         	<h2>Create Account</h2>
+                                    <?php }?>
                         </div>
                         
                         <div class="login-footer">
                         	<ul>
                             	<li class="login-g-plus">
-                                	<a href="#"><em><img src="images/logo-google.png" alt=""></em> <span>Sign in with Google</span></a>
+                                	<a href="#"><em><img src="/images/logo-google.png" alt=""></em> <span>Sign in with Google</span></a>
                                 </li>
                                 <li class="login-facebook">
                                 	<a href="#"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
@@ -66,13 +72,13 @@ use yii\widgets\ActiveForm;
         min-height: 20px;
         display: block;
     }
-</stle>
+</style>
 <?php
     $domain = yii::$app->params['domainName'];
     $this->registerJs(<<<JS
     $('#registerform-host').blur(function(){
             var v = $(this).val();
-            if($(this).val()!=='' && v.indexOf('http://') == -1){
+            if(v !='' && v.indexOf('http://') == -1){
                 $(this).val('http://'+v+'.$domain')
             }
    })

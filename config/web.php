@@ -1,5 +1,5 @@
 <?php
-
+$host_name = 'localhost:8080';
 $params = require(__DIR__ . '/params.php');
 
 $config = [
@@ -46,15 +46,8 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => false,
-            'transport' => [
-                'class' => 'Swift_SmtpTransport',
-                'host' => 'smtp.gmail.com',
-                'username' => 'abhisek101088@gmail.com',
-                'password' => 'mypass',
-                'port' => '587',
-                'encryption' => 'tls',
-            ],
+            'useFileTransport' => true,
+            
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -70,7 +63,8 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
+            'rules' => [                
+                'http://'.$host_name.'<all:.*>' =>'main<all>',                
                 'get-ideas/<filter:\w+>'=>'site/get-ideas'
             ],
         ],
@@ -78,7 +72,8 @@ $config = [
     ],
     'params' => $params,
 ];
-
+$config['modules']['main']=['class'=>'app\modules\main\Module'];
+$config['bootstrap'][] = 'main';
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';

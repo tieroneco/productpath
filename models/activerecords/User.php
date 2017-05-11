@@ -13,7 +13,7 @@ use Yii;
  * @property string $password
  * @property string $createAt
  * @property integer $active
- * @property string $activattionKey
+ * @property string $activationKey
  *
  * @property Site[] $sites
  */
@@ -36,7 +36,7 @@ class User extends \yii\db\ActiveRecord
             [['email', 'password', 'active'], 'required'],
             [['createAt'], 'safe'],
             [['active'], 'integer'],
-            [['activattionKey'], 'string'],
+            [['activationKey'], 'string'],
             [['name', 'email', 'password'], 'string', 'max' => 255],
             [['email'], 'unique'],
         ];
@@ -54,7 +54,7 @@ class User extends \yii\db\ActiveRecord
             'password' => Yii::t('app', 'Password'),
             'createAt' => Yii::t('app', 'Create At'),
             'active' => Yii::t('app', 'Active'),
-            'activattionKey' => Yii::t('app', 'Activattion Key'),
+            'activationKey' => Yii::t('app', 'Activation Key'),
         ];
     }
 

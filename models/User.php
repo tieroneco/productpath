@@ -6,7 +6,10 @@ use app\models\activerecords\User as UserDb;
 class User extends UserDb implements \yii\web\IdentityInterface
 {
     
-
+    public function rules(){
+        $rules = parent::rules();        
+        return array_merge($rules, [['email', 'unique', 'message'=>'{value} is already used']]);
+    }
 
     /**
      * @inheritdoc

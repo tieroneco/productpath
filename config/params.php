@@ -2,5 +2,5 @@
 
 return [
     'adminEmail' => 'admin@example.com',
-    'domainName'=>'featuretracker.com'
+    'domainName'=>$host_name
 ];
