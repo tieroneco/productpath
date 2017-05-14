@@ -2,5 +2,5 @@
 
 return [
     'adminEmail' => 'admin@example.com',
-    'domainName'=>$host_name
+    'domainName'=> isset($host_name) ? $host_name : 'localhost'
 ];

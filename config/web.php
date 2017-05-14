@@ -5,13 +5,8 @@ $params = require(__DIR__ . '/params.php');
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
-    'on beforeRequest' => function($event){
-        //\yii::$app->errorHandler->errorAction = null;
-        //throw new \yii\web\NotFoundHttpException;
-        //exit;
-    },
-    'layout'=>'frontend',
+    'bootstrap' => ['log'],    
+    'layout'=>'frontend',    
     'components' => [
         'authManager'=>[
             'class'=> '\yii\rbac\DbManager'
@@ -46,7 +41,15 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+            'transport' => [
+            'class' => 'Swift_SmtpTransport',
+            'host' => 'smtp.gmail.com',
+            'username' => 'mahtab.dev@gmail.com',
+            'password' => 'Mahtab321',
+            'port' => '587',
+            'encryption' => 'tls',
+        ],
             
         ],
         'log' => [
@@ -65,7 +68,10 @@ $config = [
             'showScriptName' => false,
             'rules' => [                
                 'http://'.$host_name.'<all:.*>' =>'main<all>',                
-                'get-ideas/<filter:\w+>'=>'site/get-ideas'
+                'get-ideas/<filter:\w+>'=>'site/get-ideas',
+                'submit'=>'site/submit',
+                '<action:(up|down)>'=>'site/<action>',
+                'getIdea/<id:\d+>'=>'site/idea'
             ],
         ],
         

@@ -70,11 +70,15 @@ class SiteController extends Controller
      * Displays homepage.
      *
      * @return string
-     */
-    public function actionIndex()
+     */  
+    public function actionIndex($name='')
     {
        $this->layout = 'home';
-       return $this->render('home');
+       
+       $model = new \yii\base\DynamicModel(compact('name'));
+       $model->addRule(['name'], 'string', ['max' => 12]);
+       $model->addRule(['name'], 'required');
+       return $this->render('home', compact('model'));
     }
     
     public function actionActivate(){
@@ -100,6 +104,11 @@ class SiteController extends Controller
     public function actionRegister(){        
         //$this->layout = 'register';
         $model = new RegisterForm;
+        if($sitename=(\yii::$app->request->get('site'))){
+            //$sitename = str_replace(['http://',''], $replace, $subject);
+            $model->host = $sitename;
+        }
+        
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             
                 $transaction = \yii::$app->db->beginTransaction();
@@ -124,8 +133,8 @@ class SiteController extends Controller
                     Yii::$app->mailer->compose('layouts/registration', compact('model','site', 'user'))
                     ->setFrom('from@domain.com')
                     ->setTo($model->email)
-                    ->setSubject("test");
-                    //->send();
+                    ->setSubject("Successfull Registration At " . \yii::$app->params['domainName'])
+                    ->send();
                 }else{
                     
                     throw new \yii\base\UserException();
@@ -136,8 +145,7 @@ class SiteController extends Controller
                 $session = \yii::$app->session;
                 $session->setFlash("registrationdone", "Your account has been successfully created, Please check your email");
             //}) ;
-            }catch(\Exception $e){
-               echo $e->getMessage();
+            }catch(\Exception $e){              
                 $transaction->rollBack();                
                 $errors = array_merge($user->getErrors(),$site->getErrors());
                 
@@ -161,6 +169,10 @@ class SiteController extends Controller
         if(isset($session)) $model = new RegisterForm;
         
         return $this->render("register", compact('model'));
+    }
+    
+    public function actionLogin(){
+        echo 4;
     }
     
 }

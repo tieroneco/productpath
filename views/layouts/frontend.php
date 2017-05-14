@@ -18,8 +18,10 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>FeatureTrack</title>
+    <title><?= $this->title ? $this->title : 'Feature Tracker'?></title>
+    <?= Html::csrfMetaTags() ?>
     <?php $this->head() ?>
+    <base href="/">
   </head>
   <body>
       <?php $this->beginBody() ?>

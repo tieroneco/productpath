@@ -4,10 +4,15 @@
             	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 	<h1>Get product ideas direct from your users</h1>
                     <p>Our lightweight feature request platform is perfect for early stage and growing<br> startups. Simple, lightweight and extremely powerful.</p>
-                    <form  action="#" method="post"> 
-                    	<input type="text" value="" name="" placeholder="yourproduct.featuretrack.co">
-                        <input type="button" value="Create Site" class="btn custom-btn creat-btn">
-                    </form>
+                    <?php $form = yii\widgets\ActiveForm::begin([
+                        'id'=>'create-site',
+                        'method'=>'get',
+                        'action'=>'/site/register'
+                    ])?>
+                        
+                    	<input type="text" value="" name="site" placeholder="yourproduct">
+                        <input type="submit" value="Create Site" class="btn custom-btn creat-btn">
+                    <?php yii\widgets\ActiveForm::end()?>
                     <div class="screen-short"><img src="/images/screen-short.png"></div>
                 </div>
             </div>

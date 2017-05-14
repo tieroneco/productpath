@@ -1,5 +1,6 @@
 <?php
 header('Access-Control-Allow-Origin: *');   
+//header('Access-Control-Allow-headers: GET'); 
 // comment out the following two lines when deployed to production
 defined('YII_DEBUG') or define('YII_DEBUG', true);
 defined('YII_ENV') or define('YII_ENV', 'dev');
