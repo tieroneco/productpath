@@ -76,7 +76,8 @@ $config = [
                 'get-ideas/<filter:\w+>'=>'site/get-ideas',
                 'submit'=>'site/submit',
                 '<action:(up|down)>'=>'site/<action>',
-                'getIdea/<id:\d+>'=>'site/idea'
+                'getIdea/<id:\d+>'=>'site/idea',
+                '<idea:(idea)>/<id:\d+>'=>'site/index'
             ],
         ],
         

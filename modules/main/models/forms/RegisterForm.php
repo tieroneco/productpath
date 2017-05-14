@@ -36,7 +36,7 @@ class RegisterForm extends Model{
         return [
             'host'=>'SITE ADDRESS',
             'email'=>'EMAIL',
-            'password'=>'PASSOWRD',
+            'password'=>'PASSWORD',
             'confirmPassword'=>'CONFIRM PASSWORD'
         ];
     }

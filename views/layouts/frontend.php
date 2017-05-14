@@ -2,7 +2,7 @@
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -26,9 +26,9 @@ AppAsset::register($this);
   <body>
       <?php $this->beginBody() ?>
     <div class="inner-header clearfix">
-    	<div class="logo"><a href="#"><img src="images/logo.png"></a></div>
+    	<div class="logo"><a href="<?= Url::to('',true)?>"><img src="images/logo.png"></a></div>
         <div class="tagline">Send in your product ideas!</div>
-        <div class="company-mane"><a href="#">FeatureTrack.co</a></div>
+        <div class="company-mane"><a href="<?= Url::to('https://'.\yii::$app->params['domainName'])?>">FeatureTrack.co</a></div>
 	</div>  
   <?= $content?>
   
