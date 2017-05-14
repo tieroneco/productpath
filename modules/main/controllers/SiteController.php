@@ -130,11 +130,11 @@ class SiteController extends Controller
                         
                         throw new \yii\base\UserException();
                     }
-                    Yii::$app->mailer->compose('layouts/registration', compact('model','site', 'user'))
-                    ->setFrom('from@domain.com')
-                    ->setTo($model->email)
-                    ->setSubject("Successfull Registration At " . \yii::$app->params['domainName'])
-                    ->send();
+//                    Yii::$app->mailer->compose('layouts/registration', compact('model','site', 'user'))
+//                    ->setFrom('from@domain.com')
+//                    ->setTo($model->email)
+//                    ->setSubject("Successfull Registration At " . \yii::$app->params['domainName'])
+//                    ->send();
                 }else{
                     
                     throw new \yii\base\UserException();
@@ -143,7 +143,8 @@ class SiteController extends Controller
                 $auth->assign($auth->getRole('admin'), $user->id);
                 $transaction->commit();
                 $session = \yii::$app->session;
-                $session->setFlash("registrationdone", "Your account has been successfully created, Please check your email");
+                $session->setFlash("registrationdone", "Your account has been successfully created, Please ".'<a href="'. \yii\helpers\Url::to(['site/activate/?q='.$user->activationKey], true).'">Click Here '
+                        . 'to activate yout account</a>');
             //}) ;
             }catch(\Exception $e){              
                 $transaction->rollBack();                

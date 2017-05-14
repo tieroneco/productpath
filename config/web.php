@@ -4,7 +4,7 @@ $http = 'http://';
 if(isset($_SERVER['HTTPS'])){
 	$http = 'https://';
 }
-$host_name = 'hirewpexpert.com';
+$host_name = 'localhost:8080';
 $params = require(__DIR__ . '/params.php');
 
 $config = [
