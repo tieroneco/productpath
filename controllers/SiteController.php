@@ -49,7 +49,7 @@ class SiteController extends Controller
     
     public function beforeAction($action) {
         parent::beforeAction($action);
-        if(in_array($action->id, ['up',['down']])){
+        if(in_array($action->id, ['up','down'])){
             $this->enableCsrfValidation = false;
         }
         return true;
