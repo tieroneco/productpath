@@ -1,5 +1,10 @@
 <?php
-$host_name = 'localhost:8080';
+$http = 'http://';
+
+if(isset($_SERVER['HTTPS'])){
+	$http = 'https://';
+}
+$host_name = 'hirewpexpert.com';
 $params = require(__DIR__ . '/params.php');
 
 $config = [
@@ -44,7 +49,7 @@ $config = [
             'useFileTransport' => false,
             'transport' => [
             'class' => 'Swift_SmtpTransport',
-            'host' => 'smtp.gmail.com',
+            'host' => '173.194.65.108',
             'username' => 'mahtab.dev@gmail.com',
             'password' => 'Mahtab321',
             'port' => '587',
@@ -67,7 +72,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [                
-                'http://'.$host_name.'<all:.*>' =>'main<all>',                
+                $http.$host_name.'<all:.*>' =>'main<all>',                
                 'get-ideas/<filter:\w+>'=>'site/get-ideas',
                 'submit'=>'site/submit',
                 '<action:(up|down)>'=>'site/<action>',

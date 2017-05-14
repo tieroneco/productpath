@@ -1,0 +1,6 @@
+[14-May-2017 17:50:01 UTC] PHP Parse error:  syntax error, unexpected ''password'' (T_CONSTANT_ENCAPSED_STRING), expecting ']' in /home/hirewpexpert/ft/config/db.php on line 10
+[14-May-2017 17:52:35 UTC] PHP Parse error:  syntax error, unexpected ''password'' (T_CONSTANT_ENCAPSED_STRING), expecting ']' in /home/hirewpexpert/ft/config/db.php on line 10
+[14-May-2017 17:53:13 UTC] PHP Parse error:  syntax error, unexpected ''password'' (T_CONSTANT_ENCAPSED_STRING), expecting ']' in /home/hirewpexpert/ft/config/db.php on line 10
+[14-May-2017 17:54:21 UTC] PHP Parse error:  syntax error, unexpected ''password'' (T_CONSTANT_ENCAPSED_STRING), expecting ']' in /home/hirewpexpert/ft/config/db.php on line 10
+[14-May-2017 17:55:38 UTC] PHP Parse error:  syntax error, unexpected ''password'' (T_CONSTANT_ENCAPSED_STRING), expecting ']' in /home/hirewpexpert/ft/config/db.php on line 10
+[14-May-2017 17:55:55 UTC] PHP Parse error:  syntax error, unexpected ''password'' (T_CONSTANT_ENCAPSED_STRING), expecting ']' in /home/hirewpexpert/ft/config/db.php on line 10
