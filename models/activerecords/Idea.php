@@ -79,7 +79,7 @@ class Idea extends \yii\db\ActiveRecord
      */
     public function getIdeaUser()
     {
-        return $this->hasOne(Ideauser::className(), ['id' => 'ideaUserId']);
+        return $this->hasOne(IdeaUser::className(), ['id' => 'ideaUserId']);
     }
 
     /**
