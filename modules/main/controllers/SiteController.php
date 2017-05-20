@@ -35,7 +35,7 @@ class SiteController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions'=>['register'],
+                        'actions'=>['register','login'],
                         'allow'=>true,
                         'roles'=>['?']
                     ]
@@ -172,8 +172,32 @@ class SiteController extends Controller
         return $this->render("register", compact('model'));
     }
     
-    public function actionLogin(){
-        echo 4;
+    public function actionLogin(){        
+        var_dump(\yii::$app->user->identity);
+        $this->layout='login';
+        $model = new \app\modules\main\models\forms\LoginForm();
+        if($model->Load(\yii::$app->request->post()) && $model->validate()){
+            $user = User::find()
+                    ->where(['email'=>$model->email])
+                    ->one();
+            if($user){
+                if(\yii::$app->security->validatePassword($model->password, $user->password)){
+                    $site = $user->sites;
+                    if(isset($site[0]) && $site = $site[0]){
+                        //\yii::$app->user->logout();                        
+                        \yii::$app->user->login($user); 
+                        return $this->redirect('/site/login');
+                        return $this->redirect(\yii\helpers\Url::to($site->subDomain.'/admin', false));
+                    }
+                }else{
+                    $model->addError('email','User not authenitcated');
+                }
+            }else{
+                $model->addError('email','Not a valid user');
+            }
+                    
+        }
+        return $this->render('login', compact('model'));
     }
     
 }

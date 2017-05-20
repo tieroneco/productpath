@@ -6,7 +6,7 @@ use app\models\activerecords\Idea as IdeaDb;
 
 class Idea extends IdeaDb{
     
-    public static function getideasByFilter($filter,$offset=0,$count=2){
+    public static function getideasByFilter($filter,$offset=0,$count=2,$q=''){
         
         $ideas = Self::find()
                 ->select("idea.*, owner.name as owner_name,owner.email as owner_email,owner.id as owner_user_id"
@@ -31,10 +31,11 @@ class Idea extends IdeaDb{
             case 'rejected':
                 $ideas=$ideas->andWhere(['status'=>0]);
                 break;
+            case 'search':
+                $ideas=$ideas->andWhere(['like','body',$q])->orWhere(['like','title',$q]);
         }
         $ideas =$ideas->offset($offset)
-        ->limit($count)        
-        ->asArray()->all();   
+        ->limit($count)->asArray()->all();   
         
         
         return $ideas;
@@ -52,13 +53,15 @@ class Idea extends IdeaDb{
         }
         $idea->select("idea.*, owner.name as owner_name,owner.email as owner_email,owner.id as owner_user_id"
                         . ",(select count(*) from comment where comment.ideaId = idea.id) as ccnt")
-                ->joinWith("ideaUser")
-                ->joinWith("site")
-                ->join("inner join", "user owner", "{{owner}}.id=site.user_id");
-                $idea = $idea->joinWith('comments')
+                ->joinWith("ideaUser i")
+                ->joinWith("site s")
+                ->join("inner join", "user owner", "{{owner}}.id=s.user_id");
+                $idea = $idea->joinWith('comments.commentUser')
                 ->asArray()->one();
                 
         return $idea;        
     }
+    
+    
     
 }

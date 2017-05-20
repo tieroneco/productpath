@@ -53,14 +53,14 @@ use yii\widgets\ActiveForm;
                                     <?= $form->field($model,'confirmPassword')->passwordInput(['placeHolder'=>'******'])?>
                                     
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <?= Html::submitButton('Create Account', ['class' => 'submit-btn btn-big center-block btn-success btn']) ?>                                        
+                                        <?= Html::submitButton('Create Account', ['class' => 'submit-btn btn-big center-block btn']) ?>                                        
                                     </div>
                                 </div>
                             <?php ActiveForm::end()?>
                         </div>
                     </div>
                     
-                    <div class="creat_acount_link odd">Already a member? <a href="#">Sign In</a></div>
+                    <div class="creat_acount_link odd">Already a member? <a href="/site/login">Sign In</a></div>
                 </div>
             </div>
         </div>

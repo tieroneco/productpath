@@ -1,0 +1,172 @@
+
+
+@media only screen and (max-width: 1199px) {
+.product-idea .vote-box{ width:100%;}
+.social-like { width: 100%;}	
+.admin-right { overflow: hidden; padding: 0 5%;}
+.chat-count .fa{margin: 0;}
+.comment-box textarea{width: 82%;}
+.fixedmenu{ width:15%;}
+
+}
+@media only screen and (max-width: 1024px) {
+.admin-right { overflow: hidden; padding: 0 30px;}
+.vote-picbox, .vote-box { width: 100%;}
+	
+
+.features-list li{width: 46%; margin-left:2%;}
+.features-list li:nth-child(3n-1) {margin: 0 0 20px;}
+.content-box { padding: 0;}
+.content-box h2{ margin-top:0px;}
+.fixedmenu{ width:18%;}
+}
+
+
+
+@media only screen and (max-width: 990px) {
+	.features-left{ text-align: center;}
+	.col-xs-push-1 {position: inherit;}
+	.col-xs-push-3{position: inherit;}
+	.social-icon-box a { margin-left: 7px;}
+	.admin-detail h2 { font-size: 14px;}
+	.admin-right { padding: 0;}
+	.vote-action {width: 30%;}
+	.vote-detail { margin: 2%;width: 46%;}
+	.vote-box-outer { width: 20%;}
+	.admin-account-inner{width: 635px;}
+}
+@media only screen and (max-width: 989px) {
+.admin-branding .mediumwidth{width: 56%;}
+.admin-branding label, .admin-account label{ font-size:13px;}	
+}
+@media only screen and (max-width: 860px) {
+	.fixedmenu {  width: 20%;}
+}
+@media only screen and (max-width: 767px) {
+	.header { padding: 29px;}
+	.features-list ul{ text-align:center;}
+.features-list li { display: inline-block; float: none;  margin:  10px 10px;  width: auto;}
+.features-list li:nth-child(3n-1) {margin: 0;}
+.features{padding: 170px 0 25px;}
+.content-box{ margin-top:30px;}
+.body-content {padding: 25px 0;}
+.vote-box, .vote-picbox{ width:250px;margin:0 auto;}
+.body-content{ text-align:center;}
+.main-content { margin-bottom: 20px;}
+.pull-right { float: none !important;}
+.content-box{ margin:20px 0 ;}
+.features-list{ margin:35px 0 0;}
+.product-idea .vote-box{ width:250px;margin:0 auto;}
+.content-box, .chat-count{ text-align:center;}
+.shorting-box .custom-btn{padding: 10px 20px;}
+.shorting-box .submit-btn{padding: 10px 20px;}
+
+.social-like{ text-align:center;}
+.social-site{display: inline-block;  float: none;margin:20px 10px;}
+.chat-count{ float:none;  margin: 0;}
+.dashboard{ width: 100%; position: inherit;}
+.admin-rightbox { float: left; padding: 0 15px; position: inherit; right: 0; width: 100%;}
+
+
+.admin-left{ width:100%; height:inherit;}
+.admin-left .dashboard{ text-align:center;}
+.dashboard { height: inherit;}
+.admin-left .dashboard .active-item, .admin-left .dashboard .dashboard-item, .admin-left .dashboard .inactive-item{ display:inline-block; margin:0 10px;}
+.admin-right {float: left;}
+.vote-box-outer {text-align: center; width: 100%;}
+.vote-detail { margin: 2% 0; width: 100%;}
+.vote-action { width: 100%;}
+.action-dropdown { float: left; width: 100%;}
+.action-dropdown > a{margin: 15px 0; padding: 10px 0 10px 15px; width: 100%;}
+.down-arrow { float: right; margin: 7px 10px;}
+.action-dropdown-menu{ width:100%;}
+.action-dropdown-menu::after { width: 146px;}
+.admin-header-loginbox{ width:100%;}
+.admin-header-loginbox .admin-btn{ margin:0 0 15px !important;}
+
+.admin-account .medium-big-width { float: left; margin: 10px 0 0; width: 100%;}
+ .admin-account li .aleart-btn{ width: 100%; margin:10px 0;}
+.admin-account .mediumwidth{ width:100%;}
+.admin-account-inner { width: 100%;}
+.action-dropdown-menu::after { width: 100%;}
+.action-dropdown .action-dropdown-menu { top: 39px;}
+.logo { width:100%}
+.logo a{ display:block;margin-bottom: 8px; text-align: center;}
+.admin-header-loginbox .submit-btn{width: 100%;}
+.shorting-box .open a{padding: 8px 17px 7px 18px;}
+.tagline { float: left;font-size: 18px; left: 0; position: inherit; text-align: center; width: 100%;margin: 2px 0;}
+	.company-mane {float: right;margin: 5px 0 0; text-align: center; width: 100%;}
+	.mid-btn{width: 150px;}
+	.admin-header-loginbox .login-link{ width:100%;}
+	.popup-header-left{ width:100%; text-align:center; margin:10px 0 0;}
+	.popup-header-right{width:100%; text-align:center;}
+	.popup-header-right a{margin: 0 5px;}
+	.pagination-box a .fa{  margin: -2px 5px 0 0;}
+	.pagination-box a:last-child .fa{margin: -2px 0 0 5px;}
+	.chat-count .fa{margin: 0 10px 0 0;}
+	.header-loginbox{ width:100%;}
+	
+	.fixedmenu { position: inherit; top: inherit; width: 100%;}
+	.inner-header{ position:inherit;}
+	
+	.header{position:inherit;}
+	.admin-left{position: inherit;}
+	.innerpage-body{ margin:0px;}
+	.admin-header-loginbox{ text-align:center;}
+	.pagination-box{ margin:0px;}
+	.admin-header-loginbox .free-text{ width:100%; margin:3px 0;}
+	.admin-header-loginbox .login-link{ margin: 2px 0;}
+}
+@media only screen and (max-width: 640px) {
+	.get-idea input[type="text"]{ width: auto;}
+	
+	.logo img{ width:auto;}
+	.inner-header{padding: 15px 0;}
+	.popup-header{ font-size:14px;}
+	
+	.submit-btn{ width: 100%;margin: 15px 0 0 !important;}
+	
+	.shorting-box .custom-btn { padding: 10px 13px;}
+	.comment-box textarea{ width:100%;}
+	.social-login-box .mediumwidth{ width:100% !important;}
+	 .mediumwidth{ width:100% !important;}
+	.social-icon-box {float: left; margin:0 0 15px; text-align:left; width:100%;}
+	.creat_acc-popup{padding: 0 25px;}
+	.admin-detail table tr td {display: block; padding: 5px 0; width: 100%;}
+	.admin-detail table tr td .action-dropdown{margin: 0 0 10px;}
+	.open > .search-fild{ width:290px;}
+	.shorting-box .open a { padding: 8px 17px 7px 11px;}
+	
+	
+}
+@media only screen and (max-width: 480px) {
+	.get-idea input[type="text"] { margin-bottom: 15px; width: 70%; margin-right:0px;}
+	.features-list li { width:100%; margin: 10px 0;}
+}
+@media only screen and (max-width: 414px) {
+	.shorting-box a { margin-right: 1px;}
+	.shorting-box input{margin:0px 2px;}
+	.shorting-box .custom-btn {padding: 10px 7px;}
+	.header-loginbox .custom-btn {padding: 10px;}
+	.login-link{margin:11px 10px 11px 0;}
+	.sign-up-link { margin:0px;}
+	h1{font-size: 32px; line-height:normal;}
+	br { display: none;}
+	.reply-box-heading{ padding: 25px 0;}
+	.reply-box-heading h3{font-size: 30px;}
+	.popup-body { padding: 25px 20px;}
+	.shorting-box .open a{ padding: 8px 5px;}
+	.search-outer{ margin: 0 5px 0 0;}
+}
+@media only screen and (max-width: 413px) {
+.login-footer ul li a span{font-size: 13px;}
+.login-footer ul li.login-g-plus a em{padding: 4px;}
+.login-footer ul li a{padding: 5px 11px;}
+
+}
+@media only screen and (max-width: 360px) {
+	.get-idea input[type="text"] {width: 100%;}
+	.header-loginbox .custom-btn{padding: 10px;}
+	.login-footer ul li a span{padding: 8px 5px;}
+	
+}

@@ -13,6 +13,14 @@ $config = [
     'bootstrap' => ['log'],    
     'layout'=>'frontend',    
     'components' => [
+        'session'=>[
+            'class'=> \yii\web\Session::className(),
+            'cookieParams' => [                
+                'httpOnly'=>true,
+                'path' => '/',
+                'domain' => "localhost",
+            ],
+        ],
         'authManager'=>[
             'class'=> '\yii\rbac\DbManager'
         ],
@@ -29,14 +37,14 @@ $config = [
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'JnnOfBsGE7PSMypg9Om483A-5R7D_kaL',
+            'cookieValidationKey' => 'JnnOfBsGE7PSMypg9Om483A-5R7D_kaL',             
         ],
         'cache' => [
-            'class' => 'yii\caching\FileCache',
+            'class' => 'yii\caching\FileCache',            
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => true,            
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',

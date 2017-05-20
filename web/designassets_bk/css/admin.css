@@ -1,0 +1,74 @@
+.aleart-btn{ width:100px;}
+.admin-header-loginbox{float: right;font-weight: 400;}
+.admin-btn{ font-style:initial; border:1px solid rgba(255, 255, 255, 0.37); border-radius:3px; padding:10px 24px;}
+
+.admin-header-loginbox .login-link{font-weight: 700;margin: 0 30px 0 20px;}
+.admin-header-loginbox .login-link:hover{ color:#48535c;}
+.innerpage-body{ position:relative;}
+
+.dashboard{ padding:25px 0px; background:#4993d3; position:absolute; left:0px; top:0px; width:130px; text-align:center;font-size: 13px;font-weight: 400;height: 100%;}
+.dashboard-item a{ color:#fff;}
+.dashboard-item a:hover{text-decoration:none;}
+.dashboard-item p{ margin:5px 0 15px;}
+.icon-box{ width:70px; height:70px; border-radius:8px;border: 1px solid #3b7cb6; position:relative;  margin: 0 auto;}
+.dashboard .dashboard-icon{ background:url(../images/dashbord-icon.png) no-repeat left -65px top; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:31px; height:31px;}
+
+.active-item a{ color:#fff;}
+.active-item a:hover{text-decoration:none;}
+.active-item p{ margin:5px 0 15px;}
+.active-item .icon-box{ width:70px; height:70px; border-radius:8px;border: 1px solid #fff; position:relative;  margin: 0 auto; background: #fff}
+.active-item .dashboard-icon{ background:url(../images/dashbord-icon.png) no-repeat left -32px top; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:31px; height:31px;}
+
+.inactive-item a{ color:#3b7cb6;}
+.inactive-item a:hover{text-decoration:none;}
+.inactive-item p{ margin:5px 0 15px;}
+.inactive-item .icon-box{ width:70px; height:70px; border-radius:8px;border: 1px solid #3b7cb6; position:relative;  margin: 0 auto;}
+.inactive-item .dashboard-icon{ background:url(../images/dashbord-icon.png) no-repeat left top; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:31px; height:31px;}
+
+.admin-account{ padding:65px 0 30px;}
+.admin-account form{ margin:30px 0 0;}
+.admin-account label{ margin:8px 0 0;}
+.admin-account input[type="text"], .admin-account input[type="password"], .admin-account input[type="email"], .admin-account input[type="button"]{height: 40px; float:right;}
+{height: 40px; float:right;}
+.admin-account ul{ padding:0px;}
+.admin-account li{ border-bottom:1px solid #e4e4e4; list-style:none; padding:15px 0;}
+.admin-account li .aleart-btn{ margin:0 0 0 15px; font-weight: 600;}
+.admin-account li label a{ color:#d0021b; text-decoration:none;}
+.admin-account li:last-child{  padding: 20px 0;border-bottom:none;}
+.down-arrow{ margin-left:13px;}
+.action-dropdown{float: left;}
+.action-dropdown > a{ float:right;margin:15px 0 0 18px; border:1px solid #cecbcb; padding:10px 15px; border-radius:3px;/*position: absolute;*/ background:#fff; font-weight:700; color:#48535c;width: 105px;}
+.action-dropdown > a:hover{text-decoration:none;}
+.action-dropdown-menu{ right:0px; left:inherit; top:50px;box-shadow:none; position:absolute; min-width:170px;}
+.action-dropdown-menu:after{ position:absolute; height:3px; background:#fff; top:-1px; right:0px; width:103px; content:""}
+
+.admin-vote-box{ /*width:100%;*/width: 165px; height:100%;}
+.admin-vote-box .vote-count { font-size: 18px; padding: 30px 0;}
+.action-dropdown-menu > li > a{padding: 5px 20px 5px 25px;}
+
+.tip{ background:#f9f9f9; padding:24px; text-align:center; margin-bottom:15px;}
+.admin-account form p{ float:left; margin-top:7px;}
+.tip > p{ float:none !important;}
+.tip-text{font-size: 22px;font-weight: 700;color: #48535c; margin:0 14px 0 0;}
+
+.upload-btn{border: 1px solid #e4e4e4;background-color: #5e666d; height:40px; color:#fff;}
+.upload-btn:hover{ color:#fff;}
+
+.features-box-middle{ position:relative;}
+.admin-rightbox {
+    float: right;
+	right: 30px;
+    position: relative;
+    width: calc(100% - 195px);
+}
+.admin-inner-left{float:left;}
+.admin-inner-right{ float:right}
+.admin-inner-middle{ position:absolute; float:left;width: calc(100% - 380px); top:15px;left: 194px;}
+
+/*.minicolors-theme-default.minicolors {
+    display: inline-block;
+    float: right !important;
+    width: 75% !important;
+}
+.minicolors-theme-default .minicolors-input{ width:100%;}
+.minicolors-theme-default .minicolors-swatch{ top: 12px; right:5px; left:inherit;}*/

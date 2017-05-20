@@ -25,7 +25,7 @@ AppAsset::register($this);
   </head>
   <body>
       <?php $this->beginBody() ?>
-    <div class="inner-header clearfix">
+    <div class="header header-inner clearfix">
     	<div class="logo"><a href="<?= Url::to('',true)?>"><img src="images/logo.png"></a></div>
         <div class="tagline">Send in your product ideas!</div>
         <div class="company-mane"><a href="<?= Url::to('https://'.\yii::$app->params['domainName'])?>">FeatureTrack.co</a></div>

@@ -7,60 +7,55 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\web\Session;
-
-
 use app\models\User;
 use app\models\Site;
 use app\models\Idea;
 use app\models\IdeaUser;
-
+use app\models\Comment;
 use app\models\forms\RegisterForm;
 use app\models\forms\SubmitForm;
 
+class SiteController extends Controller {
 
-class SiteController extends Controller
-{
-    
     public function behaviors() {
         $behaviors = parent::behaviors();
         $child_behaviors = [
-            'hostControl'=>[
+            'hostControl' => [
                 'class' => \yii\filters\HostControl::className(),
-                'only'=>['submit','get-ideas','index','idea'],
-                'allowedHosts'=>function($action){            
+                'except' => ['error'],
+                'allowedHosts' => function($action) {
                     $host = \yii::$app->request->hostName;
                     $site = Site::find()
-                            ->where(['like','subDomain',$host ])
-                            ->one();
-                    if($site){
-                        
-                        \yii::$app->params['site']=$site;
+                            ->where(['like', 'subDomain', $host])
+                            ->one();                    
+                    if ($site) {
+
+                        \yii::$app->params['site'] = $site;
                         return [$host];
-                    }else{
+                    } else {
                         return ['nodomainmustnotexist.com'];
                     }
-                    
                 }
             ]
         ];
-            
-            return array_merge($behaviors,$child_behaviors);
+
+        return array_merge($behaviors, $child_behaviors);
     }
-    
+
     public function beforeAction($action) {
-        
-        
-        if(in_array($action->id, ['up','down'])){
-            
+
+
+        if (in_array($action->id, ['up', 'down', 'comment'])) {
+
             $this->enableCsrfValidation = false;
-        }
+        }        
         return parent::beforeAction($action);
     }
+
     /**
      * @inheritdoc
      */
-    public function actions()
-    {
+    public function actions() {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -77,90 +72,120 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
-    {
-       $model = new \yii\base\DynamicModel();
-       $model->addRule(['name'], 'string', ['max' => 12]);
-       return $this->render('index',compact('model'));
+    public function actionIndex() {
+        var_dump(\yii::$app->user->identity);
+        $model = new \yii\base\DynamicModel();
+        $model->addRule(['name'], 'string', ['max' => 12]);
+        return $this->render('index', compact('model'));
     }
-    
-    public function actionGetIdeas($filter){
-        \yii::$app->response->format=\yii\web\Response::FORMAT_JSON;
+
+    public function actionGetIdeas($filter) {
+        \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $offset = \yii::$app->request->get('offset');
-        $ideas = Idea::getideasByFilter($filter,$offset);
-        $ideas = array_map(function($a){
-            if(isset($a['createdAt'])){
-                $a['createdAt'] = date('M d Y',$a['createdAt']);
+        $ideas = Idea::getideasByFilter($filter, $offset,2, \yii::$app->request->get('q'));
+        $ideas = array_map(function($a) {
+            if (isset($a['createdAt'])) {
+                $a['createdAt'] = date('M d Y', $a['createdAt']);
             }
-            if(isset($a['body'])){
-                $a['body'] = substr($a['body'], 0,150).'...';
+            if (isset($a['body'])) {
+                $a['body'] = substr($a['body'], 0, 150) . '...';
             }
             return $a;
         }, $ideas);
         return $ideas;
     }
-    
-    public function actionIdea($id){
-        \yii::$app->response->format=\yii\web\Response::FORMAT_JSON;
+
+    public function actionIdea($id) {
+        \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $idea = Idea::getIdea($id, \yii::$app->request->get('next'));
-        $idea = $idea?$idea:[];
-        if(!$idea) return $idea;
-        $idea = array_map(function($a){
-            if(isset($a['createdAt'])){
+        $idea = $idea ? $idea : [];
+        if (!$idea)
+            return $idea;
+        $idea = array_map(function($a) {
+            if (isset($a['createdAt'])) {
                 $a['createdAt'] = date('M d Y', $a['createdAt']);
             }
             return $a;
-        },$idea);
-        if(isset($idea['createdAt'])){
+        }, $idea);
+        if (isset($idea['createdAt'])) {
             $idea['createdAt'] = date('M d Y', $idea['createdAt']);
         }
         return $idea;
     }
-    public function actionSubmit(){
+
+    public function actionSubmit() {
         $ideaModel = new Idea;
         $ideaUserModel = new IdeaUser;
-        if(\yii::$app->request->isPost
-                && $ideaModel->load(\yii::$app->request->post())
-                && $ideaUserModel->load(\yii::$app->request->post())
-                && $ideaUserModel->validate()
-        ){
-            $ideaUser = IdeaUser::findOne(['email'=>$ideaUserModel->email]);
-            if($ideaUser){
+        if (\yii::$app->request->isPost && $ideaModel->load(\yii::$app->request->post()) && $ideaUserModel->load(\yii::$app->request->post()) && $ideaUserModel->validate()
+        ) {
+            $ideaUser = IdeaUser::findOne(['email' => $ideaUserModel->email]);
+            if ($ideaUser) {
                 $ideaUserId = $ideaUser->id;
-            }else{
+            } else {
                 $ideaUserModel->save();
                 $ideaUserId = $ideaUserModel->id;
             }
             $ideaModel->ideaUserId = $ideaUserId;
-            if($ideaModel->validate()){
+            if ($ideaModel->validate()) {
                 $ideaModel->siteId = \yii::$app->params['site']->id;
                 $ideaModel->save();
                 return $this->redirect("/");
             }
-                        
         }
-        return $this->render('submit',compact('ideaModel','ideaUserModel'));
+        return $this->render('submit', compact('ideaModel', 'ideaUserModel'));
     }
-    
-    public function actionUp(){
-        \yii::$app->response->format=\yii\web\Response::FORMAT_JSON;
+
+    public function actionUp() {
+        \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $_POST = json_decode(file_get_contents("php://input"), true);
         $idea = Idea::findOne($_POST['id']);
-        if($idea){
-            $idea->updateCounters(['votes'=>1]);
+        if ($idea) {
+            $idea->updateCounters(['votes' => 1]);
             return true;
         }
         return false;
     }
-    public function actionDown(){
-        \yii::$app->response->format=\yii\web\Response::FORMAT_JSON;
+
+    public function actionDown() {
+        \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $_POST = json_decode(file_get_contents("php://input"), true);
         $idea = Idea::findOne($_POST['id']);
-        if($idea){
-            $idea->updateCounters(['votes'=>-1]);
+        if ($idea) {
+            $idea->updateCounters(['votes' => -1]);
             return true;
         }
         return false;
     }
+
+    public function actionComment() {
+        $POST = \yii::$app->request->post();
+        $ideaUserModel = IdeaUser::findOne(['email' => \yii::$app->request->post('email')]);       
+        if(!$ideaUserModel){
+            $ideaUserModel = new IdeaUser;
+            $ideaUserModel->email = $POST['email'];
+            $ideaUserModel->name = $POST['name'];            
+        }
+        if($ideaUserModel->save()){
+            $commentModel = new Comment();
+            $commentModel->ideaId = $POST['ideaId'];
+            $commentModel->commentUserId = $ideaUserModel->id;
+            $commentModel->createdAt = time();
+            $commentModel->commentText = $POST['comment'];
+            if($commentModel->save()){
+                \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+                $u = $commentModel->commentUser;
+                return $commentModel;
+            }
+        }
+        echo 0;
+    }
     
+    function actionSearch(){
+        \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        
+        $ideas = Idea::getSimilar(\yii::$app->request->get('q'), \yii::$app->params['site']->id);
+        
+        return $ideas;
+    }
+
 }

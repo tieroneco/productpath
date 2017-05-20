@@ -23,11 +23,11 @@ AppAsset::register($this);
   </head>
   <body>
       <?php $this->beginBody() ?>
-  	<div class="bg-image"><img src="/images/home-bg.png"></div>
-    <div class="header clearfix">
+  	<div class="bg-image"></div>
+    <div class="header clearfix home-header">
     	<div class="logo"><a href="#"><img src="/images/logo-white.png"></a></div>
         <div class="header-loginbox clearfix">
-            <span class="sign-up-link btn custom-btn" onclick="javascript:location.href='/site/register'">Sign Up</span><span class="login-link btn" onclick="javascript:location.href='/site/login'">Login</span>free while in beta 
+            <span class="sign-up-link btn custom-btn" onclick="javascript:window.location.href='/site/register'">Sign Up</span><span class="login-link btn" onclick="javascript:window.location.href='/site/login'">Login</span><span class="free-text">Free while in beta</span> 
         </div>
 	</div>
     
