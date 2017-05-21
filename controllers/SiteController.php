@@ -28,8 +28,8 @@ class SiteController extends Controller {
                     $host = \yii::$app->request->hostName;
                     $site = Site::find()
                             ->where(['like', 'subDomain', $host])
-                            ->andWhere(['state'=>1])
-                            ->one();                    
+                            ->andWhere(['state' => 1])
+                            ->one();
                     if ($site) {
 
                         \yii::$app->params['site'] = $site;
@@ -38,7 +38,26 @@ class SiteController extends Controller {
                         return ['nodomainmustnotexist.com'];
                     }
                 }
-            ]
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['login'],
+                'rules' => [
+                        [
+                        'actions' => ['login'],
+                        'allow' => true,
+                        'roles' => ['?']                        
+                        ],
+                        [
+                        'actions' => ['login'],
+                        'allow' => false,
+                        'roles' => ['admin'],
+                        'denyCallback' => function() {
+                            return $this->redirect('/admin');
+                        }
+                        ],
+                ]
+            ],
         ];
 
         return array_merge($behaviors, $child_behaviors);
@@ -50,10 +69,10 @@ class SiteController extends Controller {
         if (in_array($action->id, ['up', 'down', 'comment'])) {
 
             $this->enableCsrfValidation = false;
-        }  
-        $return  = parent::beforeAction($action);
-         $site_brand = SiteBrand::findOne(['siteId'=> \yii::$app->params['site']->id]);
-         $this->view->params['site_brand'] = $site_brand;
+        }
+        $return = parent::beforeAction($action);
+        $site_brand = SiteBrand::findOne(['siteId' => \yii::$app->params['site']->id]);
+        $this->view->params['site_brand'] = $site_brand;
         return $return;
     }
 
@@ -77,19 +96,19 @@ class SiteController extends Controller {
      *
      * @return string
      */
-    public function actionIndex() {       
+    public function actionIndex() {
         $model = new \yii\base\DynamicModel();
         $model->addRule(['name'], 'string', ['max' => 12]);
-        
-       
-        
-        return $this->render('index', compact('model','site_brand'));
+
+
+
+        return $this->render('index', compact('model', 'site_brand'));
     }
 
     public function actionGetIdeas($filter) {
         \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $offset = \yii::$app->request->get('offset');
-        $ideas = Idea::getideasByFilter($filter, $offset,2, \yii::$app->request->get('q'));
+        $ideas = Idea::getideasByFilter($filter, $offset, 2, \yii::$app->request->get('q'));
         $ideas = array_map(function($a) {
             if (isset($a['createdAt'])) {
                 $a['createdAt'] = date('M d Y', $a['createdAt']);
@@ -133,6 +152,7 @@ class SiteController extends Controller {
                 $ideaUserId = $ideaUserModel->id;
             }
             $ideaModel->ideaUserId = $ideaUserId;
+            $ideaModel->createdAt = time();
             if ($ideaModel->validate()) {
                 $ideaModel->siteId = \yii::$app->params['site']->id;
                 $ideaModel->save();
@@ -166,19 +186,19 @@ class SiteController extends Controller {
 
     public function actionComment() {
         $POST = \yii::$app->request->post();
-        $ideaUserModel = IdeaUser::findOne(['email' => \yii::$app->request->post('email')]);       
-        if(!$ideaUserModel){
+        $ideaUserModel = IdeaUser::findOne(['email' => \yii::$app->request->post('email')]);
+        if (!$ideaUserModel) {
             $ideaUserModel = new IdeaUser;
             $ideaUserModel->email = $POST['email'];
-            $ideaUserModel->name = $POST['name'];            
+            $ideaUserModel->name = $POST['name'];
         }
-        if($ideaUserModel->save()){
+        if ($ideaUserModel->save()) {
             $commentModel = new Comment();
             $commentModel->ideaId = $POST['ideaId'];
             $commentModel->commentUserId = $ideaUserModel->id;
             $commentModel->createdAt = time();
             $commentModel->commentText = $POST['comment'];
-            if($commentModel->save()){
+            if ($commentModel->save()) {
                 \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
                 $u = $commentModel->commentUser;
                 return $commentModel;
@@ -186,39 +206,44 @@ class SiteController extends Controller {
         }
         echo 0;
     }
-    
-    function actionSearch(){
+
+    function actionSearch() {
         \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        
+
         $ideas = Idea::getSimilar(\yii::$app->request->get('q'), \yii::$app->params['site']->id);
-        
+
         return $ideas;
     }
-    
-    public function actionLogin(){                
-        $this->layout='login';
+
+    public function actionLogin() {
+        if (!\yii::$app->user->isGuest) {
+            return $this->redirect('/admin');
+        }
+        $this->layout = 'login';
         $model = new \app\modules\main\models\forms\LoginForm();
-        if($model->Load(\yii::$app->request->post()) && $model->validate()){
+        if ($model->Load(\yii::$app->request->post()) && $model->validate()) {
             $user = User::find()
-                    ->where(['email'=>$model->email])
-                    ->andWhere(['active'=>1])
+                    ->where(['email' => $model->email])
+                    ->andWhere(['active' => 1])
                     ->one();
-            if($user){
-                if(\yii::$app->security->validatePassword($model->password, $user->password)){
+            if ($user) {
+                if (\yii::$app->security->validatePassword($model->password, $user->password)) {
                     $site = $user->sites;
-                    if(isset($site[0]) && $site = $site[0]){
-                        //\yii::$app->user->logout();
-                        
-                        \yii::$app->user->login($user);                         
-                        return $this->redirect(\yii\helpers\Url::to($site->subDomain.'/admin', false));
-                    }
-                }else{
-                    $model->addError('email','User not authenitcated');
-                }
-            }else{
-                $model->addError('email','Not a valid user');
-            }
                     
+                    if (isset($site[0]) && ($site = $site[0]) && $site->id == \yii::$app->params['site']->id) {
+                        //\yii::$app->user->logout();
+
+                        \yii::$app->user->login($user);
+                        return $this->redirect(\yii\helpers\Url::to($site->subDomain . '/admin', false));
+                    }else{
+                        $model->addError('email', 'User is not associated with this site');
+                    }
+                } else {
+                    $model->addError('email', 'User not authenitcated');
+                }
+            } else {
+                $model->addError('email', 'Not a valid user');
+            }
         }
         return $this->render('login', compact('model'));
     }

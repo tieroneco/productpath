@@ -25,9 +25,9 @@ AppAdminAsset::register($this);
     <body>
         <?php $this->beginBody() ?>
         <div class="header header-inner clearfix">
-            <div class="logo"><a href="#"><img src="images/logo.png"></a></div>
+            <div class="logo"><a href="/admin"><img src="images/logo.png"></a></div>
             <div class="admin-header-loginbox clearfix">
-                <span class="login-link btn">Logout</span>  
+                <span class="login-link btn" onclick="javascript:window.location.href='/admin/logout'">Logout</span>  
             </div>
         </div>
 
@@ -35,7 +35,7 @@ AppAdminAsset::register($this);
             <div class="admin-left">  
                 <div class="dashboard">
                     <div class="dashboard-item active-item">
-                        <a href="#">
+                        <a href="/admin">
                             <div class="icon-box"><span class="dashboard-icon7"></span></div>
                             <p>Admin</p>
                         </a>

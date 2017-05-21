@@ -68,7 +68,7 @@ ActiveForm::end();
                     </style>                   
 
                     <div class="return-ideas">
-                        <a href="#">Return to Ideas</a>
+                        <a href="/">Return to Ideas</a>
                     </div>
                 </div>
             </div>

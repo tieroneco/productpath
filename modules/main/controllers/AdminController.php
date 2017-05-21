@@ -17,15 +17,16 @@ use app\models\EntryForm;
 
 class AdminController extends Controller{
     public $layout = 'backend';
+    public $enableCsrfValidation = false;
     public function behaviors()
     {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout','index'],
+                'only' => ['logout','index','pass-reset', 'delete'],
                 'rules' => [
                     [
-                        'actions' => ['index','logout'],
+                        'actions' => ['index','logout', 'pass-reset','delete'],
                         'allow' => true,
                         'roles' => ['superAdmin'],
                     ]
@@ -34,7 +35,7 @@ class AdminController extends Controller{
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => ['post','get'],
                 ],
             ],
         ];
@@ -43,14 +44,21 @@ class AdminController extends Controller{
     function actionIndex(){
         return $this->render('home');
     }
-    
+    function actionLogout(){
+        \yii::$app->user->logout();
+        return $this->redirect('/');
+    }
     function actionAccounts(){
         \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $offset = \yii::$app->request->get('offset');
         $sites = Site::find()
-                ->with('user')
-                ->asArray()
-                ->offset($offset)
+                ->joinWith('user u')
+                ->asArray();
+        if($s = \yii::$app->request->get('search')){
+            $sites->andWhere(['like','subDomain', $s])
+                    ->orWhere(['like','u.email', $s]);
+        }
+         $sites =        $sites->offset($offset)
                 ->limit(2)
                 ->all();
         if($sites){
@@ -67,5 +75,52 @@ class AdminController extends Controller{
             }
         }
         return $sites ? $sites : 0;
+    }
+    
+    function actionPassReset(){
+        \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        if($user_id = \yii::$app->request->post('user_id')){
+            $user = User::findOne($user_id);
+            if($user){
+                $password = uniqid();
+                $user->password= \yii::$app->security->generatePasswordHash($password);
+                $user->activationKey = \yii::$app->security->generateRandomString();
+                $user->active = 0;
+                // + TO DO need to set the email
+                if($user->save()){
+                    return 1;
+                }else{
+                    return 0;
+                }
+            }
+        }
+    }
+    
+    function actionDelete(){
+        \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        if(($user_id = \yii::$app->request->post('user_id')) && \yii::$app->request->post('del')){
+            $user = User::findOne($user_id);
+            if($user){
+                $site = $user->sites[0];
+                $site->state=0;
+                
+                $user->active = 0;
+                if($user->save() && $site->save()){
+                    return 1;
+                }
+            }
+        }elseif(($user_id = \yii::$app->request->post('user_id')) && !\yii::$app->request->post('del')){
+            $user = User::findOne($user_id);
+            if($user){
+                $site = $user->sites[0];
+                $site->state = 1;
+                $user->active = 1;
+                if($user->save() && $site->save()){
+                    return 1;
+                }
+            }
+        }
+        
+        return 0;
     }
 }
