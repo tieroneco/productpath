@@ -3,12 +3,14 @@ namespace app\controllers;
 
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\UploadedFile;
+
 use app\models\Idea;
 use app\models\Reply;
 use app\models\Site;
 use app\models\SiteBrand;
 use app\models\forms\LogoUpload;
-use yii\web\UploadedFile;
+use app\models\User;
 
 
 class AdminController extends Controller{
@@ -22,6 +24,7 @@ class AdminController extends Controller{
                     $host = \yii::$app->request->hostName;
                     $site = Site::find()
                             ->where(['like', 'subDomain', $host])
+                            ->andWhere(['state'=>1])
                             ->one();                    
                     if ($site) {
                         \yii::$app->params['site'] = $site;
@@ -58,7 +61,7 @@ class AdminController extends Controller{
         $this->enableCsrfValidation = false;
         return parent::beforeAction($action);
     }
-    function actionIndex(){      
+    function actionIndex(){        
         return $this->render('adminhome');
     }
     function actionChangeState(){
@@ -130,15 +133,63 @@ class AdminController extends Controller{
        }
     }
     
-    function actionGetBrand(){
+    function actionGetBrand(){        
         \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $brand = SiteBrand::find()
                 ->where(['siteId'=> \yii::$app->params['site']->id])
                 ->asArray()
-                ->one();
-        return $brand;
+                ->one();        
+        return $brand ? $brand : 0;
         
         
+    }
+    
+    function actionGetMe(){        
+        \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $user_id = \yii::$app->user->id;
+        $user = User::find($user_id)
+                ->with('sites')->asArray()->one();
+        unset($user['password']);
+        return $user;
+    }
+    /**
+     * Update the current user
+     */
+    function actionUpdate(){
+        \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $user = \yii::$app->user->identity;
+        if(!$user)
+               return 0; 
+        if(\yii::$app->request->post('password') && \yii::$app->request->post('cpass')){
+            $user->password = Yii::$app->getSecurity()->generatePasswordHash(\yii::$app->request->post('password'));
+        }
+        if(\yii::$app->request->post('name')){
+            $user->name = \yii::$app->request->post('name');
+        }
+        $user->receive_email = \yii::$app->request->post('receive_email');
+        if($user->save()){
+            return $user->getAttributes();
+        }else{
+            return 0;
+        }
+        
+    }
+    
+    function actionDelete(){
+        $user = \yii::$app->user->identity;
+        
+        if(!$user){
+            return 0;
+        }
+        $site = $user->sites[0];
+        $user->active = -1;
+        $user->save();
+        $site->state = 0;
+        $site->save();
+        \yii::$app->user->logout();
+                
+        
+        return 1;
     }
 }
 

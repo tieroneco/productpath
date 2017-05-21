@@ -27,7 +27,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout','register'],
+                'only' => ['logout','register','login'],
                 'rules' => [
                     [
                         'actions' => ['logout'],
@@ -181,11 +181,12 @@ class SiteController extends Controller
                     ->one();
             if($user){
                 if(\yii::$app->security->validatePassword($model->password, $user->password)){
-                    $site = $user->sites;
-                    if(isset($site[0]) && $site = $site[0]){
-                        //\yii::$app->user->logout();                        
-                        \yii::$app->user->login($user);                         
-                        return $this->redirect(\yii\helpers\Url::to('/admin', false));
+                    $role = \Yii::$app->authManager->getRolesByUser($user->id);                    
+                    if(isset($role['superAdmin'])){
+                        \yii::$app->user->login($user);
+                        return $this->redirect('/admin');
+                    }else{
+                        $model->addError('email','User is ont privilaged');
                     }
                 }else{
                     $model->addError('email','User not authenitcated');

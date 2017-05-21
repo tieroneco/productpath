@@ -9,7 +9,8 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
-AppAsset::register($this);
+$appasset = AppAsset::register($this);
+$appasset->css[] = 'css/responsive.css';
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -26,13 +27,13 @@ AppAsset::register($this);
   <body>
       <?php $this->beginBody() ?>
     <div class="header header-inner clearfix"> 
-        <?php
+        <?php        
             $site_brand = $this->params['site_brand'];            
         ?>
     	<div class="logo"><a href="<?= Url::to('',true)?>"><img src="<?= isset($site_brand['logoFile'])? '/logo/'.$site_brand['logoFile'] :
             '/designassets/images/logo.png'?>"></a></div>
         <div class="tagline"><?= isset($site_brand['headerText']) ? $site_brand['headerText'] : 'Send in your product ideas!'?></div>
-        <div class="company-mane"><a href="<?= Url::to('https://'.(isset($site_brand['logoAltText']) ? $site_brand['logoAltText'] : yii::$app->params['domain']))?>"><?= isset($site_brand['logoAltText']) ? $site_brand['logoAltText']: 'FeatureTrack.co'?></a></div>
+        <div class="company-mane"><a href="<?= Url::to('https://'.(isset($site_brand['logoAltText']) ? $site_brand['logoAltText'] : yii::$app->params['domainName']))?>"><?= isset($site_brand['logoAltText']) ? $site_brand['logoAltText']: 'FeatureTrack.co'?></a></div>
 	</div>  
   <?= $content?>
   

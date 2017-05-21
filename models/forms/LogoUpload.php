@@ -5,6 +5,9 @@ use yii\base\Model;
 use yii\web\UploadedFile;
 use Yii;
 use yii\imagine\Image;
+use Imagine\Gd;
+use Imagine\Image\Box;
+use Imagine\Image\BoxInterface;
 
 class LogoUpload extends Model
 {
@@ -23,8 +26,9 @@ class LogoUpload extends Model
     public function upload()
     {
         if ($this->validate()) {
-            
-            $this->logoFile->saveAs(\yii::getAlias('@web').'logo/' . $this->logoFile->baseName . '.' . $this->logoFile->extension);
+            $fileName = \yii::getAlias('@web').'logo/' . $this->logoFile->baseName . '.' . $this->logoFile->extension;
+            $this->logoFile->saveAs($fileName);
+            Image::getImagine()->open($fileName)->thumbnail(new Box(155, 24))->save($fileName , ['quality' => 90]);
             return true;
         } else {
             return false;

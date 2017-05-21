@@ -19,7 +19,7 @@ AppAdminAsset::register($this);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $this->title ? $this->title : 'Feature Tracker'?></title>
-    <?= Html::csrfMetaTags() ?>
+    <?= Html::csrfMetaTags() ?>    
     <?php $this->head() ?>
     <base href="/admin">
   </head>

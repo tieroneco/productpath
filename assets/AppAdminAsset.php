@@ -19,6 +19,7 @@ class AppAdminAsset extends AssetBundle
     public $baseUrl = '@web/designassets';
     public $css = [
         'css/admin.css',
+        'css/responsive.css'
     ];
     public $js = [
     ];

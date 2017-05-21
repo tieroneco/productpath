@@ -28,6 +28,7 @@ class SiteController extends Controller {
                     $host = \yii::$app->request->hostName;
                     $site = Site::find()
                             ->where(['like', 'subDomain', $host])
+                            ->andWhere(['state'=>1])
                             ->one();                    
                     if ($site) {
 
@@ -49,8 +50,11 @@ class SiteController extends Controller {
         if (in_array($action->id, ['up', 'down', 'comment'])) {
 
             $this->enableCsrfValidation = false;
-        }        
-        return parent::beforeAction($action);
+        }  
+        $return  = parent::beforeAction($action);
+         $site_brand = SiteBrand::findOne(['siteId'=> \yii::$app->params['site']->id]);
+         $this->view->params['site_brand'] = $site_brand;
+        return $return;
     }
 
     /**
@@ -77,7 +81,7 @@ class SiteController extends Controller {
         $model = new \yii\base\DynamicModel();
         $model->addRule(['name'], 'string', ['max' => 12]);
         
-        $site_brand = SiteBrand::findOne(['siteId'=> \yii::$app->params['site']->id]);
+       
         
         return $this->render('index', compact('model','site_brand'));
     }
@@ -197,6 +201,7 @@ class SiteController extends Controller {
         if($model->Load(\yii::$app->request->post()) && $model->validate()){
             $user = User::find()
                     ->where(['email'=>$model->email])
+                    ->andWhere(['active'=>1])
                     ->one();
             if($user){
                 if(\yii::$app->security->validatePassword($model->password, $user->password)){

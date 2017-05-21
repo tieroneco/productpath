@@ -3,6 +3,7 @@ namespace app\commands;
 
 use yii\console\Controller;
 use yii;
+use app\models\User;
 
 class RbacController extends Controller{
     
@@ -27,6 +28,19 @@ class RbacController extends Controller{
         $auth->add($superAdmin);
         $auth->addChild($superAdmin,$isAdmin);
         
+    }
+    
+    public function actionSuperUserCreate(){
+        $user = new User;
+        $user->name = 'super Admin';
+        $user->email = 'superadmin@tierone.com';
+        $user->password = \yii::$app->security->generatePasswordHash('1234');
+        $user->createAt = time();
+        $user->active=1;
+        $user->save();
+        $auth= \yii::$app->getAuthManager();
+                $auth->assign($auth->getRole('superAdmin'), $user->id);
+                echo "super user created";
     }
 }
 /* 
