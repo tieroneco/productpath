@@ -21,14 +21,15 @@ AppAdminAsset::register($this);
     <title><?= $this->title ? $this->title : 'Feature Tracker'?></title>
     <?= Html::csrfMetaTags() ?>
     <?php $this->head() ?>
-    <base href="/">
+    <base href="/admin">
   </head>
   <body>
       <?php $this->beginBody() ?>
     <div class="header header-inner clearfix">
-    	<div class="logo"><a href="#"><img src="/designassets/images/logo.png"></a></div>
+    	<div class="logo"><a href="javscript:void(0)"><img src="/designassets/images/logo.png"></a></div>
         <div class="admin-header-loginbox clearfix">
-       		<span class="sign-up-link btn admin-btn submit-btn">Visit Site</span><span class="login-link btn">Logout</span><div class="free-text">Email Support </div>
+            <span class="sign-up-link btn admin-btn submit-btn" onclick="javascript:window.location.href='/'">Visit Site</span>
+            <span class="login-link btn" onclick="javascript:window.location.href='admin/logout'">Logout</span><div class="free-text">Email Support </div>
         </div>
 	</div>
  

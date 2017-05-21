@@ -172,8 +172,7 @@ class SiteController extends Controller
         return $this->render("register", compact('model'));
     }
     
-    public function actionLogin(){        
-        var_dump(\yii::$app->user->identity);
+    public function actionLogin(){                
         $this->layout='login';
         $model = new \app\modules\main\models\forms\LoginForm();
         if($model->Load(\yii::$app->request->post()) && $model->validate()){
@@ -185,9 +184,8 @@ class SiteController extends Controller
                     $site = $user->sites;
                     if(isset($site[0]) && $site = $site[0]){
                         //\yii::$app->user->logout();                        
-                        \yii::$app->user->login($user); 
-                        return $this->redirect('/site/login');
-                        return $this->redirect(\yii\helpers\Url::to($site->subDomain.'/admin', false));
+                        \yii::$app->user->login($user);                         
+                        return $this->redirect(\yii\helpers\Url::to('/admin', false));
                     }
                 }else{
                     $model->addError('email','User not authenitcated');

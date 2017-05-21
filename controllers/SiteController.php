@@ -14,6 +14,7 @@ use app\models\IdeaUser;
 use app\models\Comment;
 use app\models\forms\RegisterForm;
 use app\models\forms\SubmitForm;
+use app\models\SiteBrand;
 
 class SiteController extends Controller {
 
@@ -72,11 +73,13 @@ class SiteController extends Controller {
      *
      * @return string
      */
-    public function actionIndex() {
-        var_dump(\yii::$app->user->identity);
+    public function actionIndex() {       
         $model = new \yii\base\DynamicModel();
         $model->addRule(['name'], 'string', ['max' => 12]);
-        return $this->render('index', compact('model'));
+        
+        $site_brand = SiteBrand::findOne(['siteId'=> \yii::$app->params['site']->id]);
+        
+        return $this->render('index', compact('model','site_brand'));
     }
 
     public function actionGetIdeas($filter) {
@@ -186,6 +189,33 @@ class SiteController extends Controller {
         $ideas = Idea::getSimilar(\yii::$app->request->get('q'), \yii::$app->params['site']->id);
         
         return $ideas;
+    }
+    
+    public function actionLogin(){                
+        $this->layout='login';
+        $model = new \app\modules\main\models\forms\LoginForm();
+        if($model->Load(\yii::$app->request->post()) && $model->validate()){
+            $user = User::find()
+                    ->where(['email'=>$model->email])
+                    ->one();
+            if($user){
+                if(\yii::$app->security->validatePassword($model->password, $user->password)){
+                    $site = $user->sites;
+                    if(isset($site[0]) && $site = $site[0]){
+                        //\yii::$app->user->logout();
+                        
+                        \yii::$app->user->login($user);                         
+                        return $this->redirect(\yii\helpers\Url::to($site->subDomain.'/admin', false));
+                    }
+                }else{
+                    $model->addError('email','User not authenitcated');
+                }
+            }else{
+                $model->addError('email','Not a valid user');
+            }
+                    
+        }
+        return $this->render('login', compact('model'));
     }
 
 }

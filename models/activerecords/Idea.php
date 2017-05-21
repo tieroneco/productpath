@@ -21,6 +21,7 @@ use Yii;
  * @property Comment[] $comments
  * @property Ideauser $ideaUser
  * @property Site $site
+ * @property Reply[] $replies
  */
 class Idea extends \yii\db\ActiveRecord
 {
@@ -79,7 +80,7 @@ class Idea extends \yii\db\ActiveRecord
      */
     public function getIdeaUser()
     {
-        return $this->hasOne(IdeaUser::className(), ['id' => 'ideaUserId']);
+        return $this->hasOne(Ideauser::className(), ['id' => 'ideaUserId']);
     }
 
     /**
@@ -88,5 +89,13 @@ class Idea extends \yii\db\ActiveRecord
     public function getSite()
     {
         return $this->hasOne(Site::className(), ['id' => 'siteId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReplies()
+    {
+        return $this->hasMany(Reply::className(), ['ideaId' => 'id']);
     }
 }

@@ -25,10 +25,14 @@ AppAsset::register($this);
   </head>
   <body>
       <?php $this->beginBody() ?>
-    <div class="header header-inner clearfix">
-    	<div class="logo"><a href="<?= Url::to('',true)?>"><img src="images/logo.png"></a></div>
-        <div class="tagline">Send in your product ideas!</div>
-        <div class="company-mane"><a href="<?= Url::to('https://'.\yii::$app->params['domainName'])?>">FeatureTrack.co</a></div>
+    <div class="header header-inner clearfix"> 
+        <?php
+            $site_brand = $this->params['site_brand'];            
+        ?>
+    	<div class="logo"><a href="<?= Url::to('',true)?>"><img src="<?= isset($site_brand['logoFile'])? '/logo/'.$site_brand['logoFile'] :
+            '/designassets/images/logo.png'?>"></a></div>
+        <div class="tagline"><?= isset($site_brand['headerText']) ? $site_brand['headerText'] : 'Send in your product ideas!'?></div>
+        <div class="company-mane"><a href="<?= Url::to('https://'.(isset($site_brand['logoAltText']) ? $site_brand['logoAltText'] : yii::$app->params['domain']))?>"><?= isset($site_brand['logoAltText']) ? $site_brand['logoAltText']: 'FeatureTrack.co'?></a></div>
 	</div>  
   <?= $content?>
   

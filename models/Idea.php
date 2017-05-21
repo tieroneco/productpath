@@ -14,7 +14,8 @@ class Idea extends IdeaDb{
                 ->joinWith("ideaUser")
                 ->joinWith("site")
                 ->join("inner join", "user owner", "{{owner}}.id=site.user_id")
-                ->where(['siteId'=> \yii::$app->params['site']->id]);
+                ->where(['siteId'=> \yii::$app->params['site']->id])
+                ->andWhere(['!=','status',-1]);
                 
         //echo $ideas->createCommand()->sql;exit;
         switch($filter){
@@ -56,7 +57,7 @@ class Idea extends IdeaDb{
                 ->joinWith("ideaUser i")
                 ->joinWith("site s")
                 ->join("inner join", "user owner", "{{owner}}.id=s.user_id");
-                $idea = $idea->joinWith('comments.commentUser')
+                $idea = $idea->joinWith('comments.commentUser')->joinWith('replies')
                 ->asArray()->one();
                 
         return $idea;        
