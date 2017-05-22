@@ -54,7 +54,7 @@ use yii\widgets\ActiveForm;
                             </div>
 
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                <input type="submit" class="submit-btn pull-right  inactive-btn btn" value="Submit Idea">
+                                <input type="submit" class="submit-btn pull-right  mid-btn" value="Submit Idea">
                             </div>
                         </div>
                     </div>

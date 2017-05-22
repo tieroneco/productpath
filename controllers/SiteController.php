@@ -62,7 +62,8 @@ class SiteController extends Controller {
 
         return array_merge($behaviors, $child_behaviors);
     }
-
+    
+    
     public function beforeAction($action) {
 
 
@@ -75,7 +76,28 @@ class SiteController extends Controller {
         $this->view->params['site_brand'] = $site_brand;
         return $return;
     }
-
+    
+    public function actionFbLogin(){
+        \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+       if(\yii::$app->request->isPost){
+           $p = yii::$app->request->post();
+           if($p){
+               
+               $user = User::find()
+                       ->where(['active'=>1])
+                       ->andWhere(['email'=>$p['email']])
+                       ->joinWith('sites')
+                       ->andWhere(['site.id'=>\yii::$app->params['site']->id])                       
+                       ->one();
+               if($user){
+                   \yii::$app->user->login($user);
+                   return 1;
+                   
+               }
+           }
+       }
+       return 0;
+    }
     /**
      * @inheritdoc
      */

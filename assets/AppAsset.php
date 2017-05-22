@@ -26,7 +26,8 @@ class AppAsset extends AssetBundle
         'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
     ];
     public $js = [
-        'js/bootstrap.js'
+        'js/bootstrap.js',
+        'js/facebook.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

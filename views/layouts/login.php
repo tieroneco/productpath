@@ -17,7 +17,9 @@ AppAsset::register($this);
         <meta charset="<?= Yii::$app->charset ?>">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <?= Html::csrfMetaTags() ?>
         <title>FeaturseTrack</title>
+        
         <?php $this->head() ?>
     </head>
     <body>
@@ -30,8 +32,8 @@ AppAsset::register($this);
                         <div class="login-logo">
                             <a href="#"><img src="/designassets/images/logo-white.png" alt=""></a>
                         </div>
-                        <?= $content ?>
-                        <div  class="creat_acount_link"><a href="/site/register">Create Account</a></div>
+                        <?= $content ?>                                         
+                        <div  class="creat_acount_link"><a href="//<?= yii::$app->params['domainName']?>/site/register">Create Account</a></div>
                     </div>
                 </div>
             </div>

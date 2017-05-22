@@ -20,7 +20,7 @@ class RegisterForm extends Model{
             }",'when'=>function($model){
                 return $model->password !='';
             }],
-            [['password'],'string','length'=>[4,12]],
+            [['password'],'string','length'=>[4,30]],
             ['email', 'notExists'],
             ['host','match', 'pattern'=>'~^http://[a-z0-9A-Z\-]+\.'. yii::$app->params['domainName'].'$~']
         ];

@@ -61,7 +61,8 @@ class AdminController extends Controller{
         $this->enableCsrfValidation = false;
         return parent::beforeAction($action);
     }
-    function actionIndex(){        
+    function actionIndex(){
+        var_dump(\yii::$app->user->id);
         return $this->render('adminhome');
     }
     function actionChangeState(){
@@ -87,7 +88,8 @@ class AdminController extends Controller{
         return 0;
     }
     
-    function actionSaveBrand(){   
+    function actionSaveBrand(){
+        $p = time();
         \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $model = new LogoUpload();
         $image_filename = '';
@@ -96,8 +98,8 @@ class AdminController extends Controller{
             unset($_FILES['logoFile']);
             $model->logoFile = UploadedFile::getInstance($model, 'logoFile');
             if($model->validate()){
-                if($model->upload()){
-                    $image_filename = $model->logoFile->baseName . '.' . $model->logoFile->extension;
+                if($model->upload($p)){
+                    $image_filename = $p.$model->logoFile->baseName . '.' . $model->logoFile->extension;
                 }
             }else{
                 $errors = $model->getErrors(); ;
@@ -115,7 +117,7 @@ class AdminController extends Controller{
            $siteBrandModel->siteId = \yii::$app->params['site']->id;
            if($image_filename){
                if($siteBrandModel->logoFile){
-                   echo $old_file = \yii::getAlias('@webroot').'/logo/'.$siteBrandModel->logoFile;
+                   $old_file = \yii::getAlias('@webroot').'/logo/'.$siteBrandModel->logoFile;
                    if(file_exists($old_file)){
                        unlink($old_file);
                    }
@@ -147,7 +149,8 @@ class AdminController extends Controller{
     function actionGetMe(){        
         \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $user_id = \yii::$app->user->id;
-        $user = User::find($user_id)
+        $user = User::find()
+                ->where(['id'=>$user_id])
                 ->with('sites')->asArray()->one();
         unset($user['password']);
         return $user;

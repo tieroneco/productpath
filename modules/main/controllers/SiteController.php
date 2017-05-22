@@ -11,10 +11,10 @@ use yii\web\Session;
 use app\modules\main\models\forms\RegisterForm;
 use app\models\User;
 use app\models\Site;
+use \app\models\IdeaUser;
 
 //++ TODO DELETE
-use app\models\ContactForm;
-use app\models\EntryForm;
+
 
 class SiteController extends Controller
 {
@@ -65,7 +65,9 @@ class SiteController extends Controller
             ],
         ];
     }
-
+    
+    
+    
     /**
      * Displays homepage.
      *
@@ -128,7 +130,23 @@ class SiteController extends Controller
                     $site->createdAt = date('Y-m-d H:i:s');                   
                     if(!$site->validate() || !$site->save()){
                         
-                        throw new \yii\base\UserException();
+                        throw new \yii\base\UserException('Site could not be saved');
+                    }
+                    if(\yii::$app->request->post('social')){
+                        //this user used socail login
+                        $p = \yii::$app->request->post();
+                        $ideaUser = new IdeaUser;
+                        $ideaUser->email = $user->email;
+                        $ideaUser->authType = @\yii::$app->params['Auth'.$p['social']];
+                        $ideaUser->authUserId = $model->password;
+                        $ideaUser->createdAt = time();
+                        if($p['_firstname']){
+                            $ideaUser->name = $p['_firstname'];
+                        }
+                        if(!$ideaUser->save()){
+                            throw new \yii\base\UserException('Social user could not be saved');
+                        }
+                        
                     }
 //                    Yii::$app->mailer->compose('layouts/registration', compact('model','site', 'user'))
 //                    ->setFrom('from@domain.com')
@@ -137,19 +155,19 @@ class SiteController extends Controller
 //                    ->send();
                 }else{
                     
-                    throw new \yii\base\UserException();
+                    throw new \yii\base\UserException('User could not be saved');
                 }
                 $auth= \yii::$app->getAuthManager();
                 $auth->assign($auth->getRole('admin'), $user->id);
                 $transaction->commit();
                 $session = \yii::$app->session;
                 $session->setFlash("registrationdone", "Your account has been successfully created, Please ".'<a href="'. \yii\helpers\Url::to(['site/activate/?q='.$user->activationKey], true).'">Click Here '
-                        . 'to activate yout account</a>');
+                        . 'to activate your account</a>');
             //}) ;
             }catch(\Exception $e){              
                 $transaction->rollBack();                
                 $errors = array_merge($user->getErrors(),$site->getErrors());
-                
+                $model->addError('email', $e->getMessage());
                 foreach($errors as $attr=>$error_details){
                     foreach($error_details as $error){
                         switch($attr){

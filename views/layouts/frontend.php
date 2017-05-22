@@ -29,6 +29,42 @@ $appasset->css[] = 'css/responsive.css';
     <div class="header header-inner clearfix"> 
         <?php        
             $site_brand = $this->params['site_brand'];            
+            if($site_brand){
+                ?>
+        <style>
+                <?php
+                if(isset($site_brand['navButtonColor'])){
+                    ?>
+                    
+                    .shorting-box .submit-btn{
+                        background:<?=$site_brand['navButtonColor']?>
+                    }
+                    <?php
+                }
+                ?>
+                <?php
+                if(isset($site_brand['headerTextColor'])){
+                    ?>
+                    
+                    .header-inner .tagline-btn{
+                        color:<?=$site_brand['headerTextColor']?>
+                    }
+                    <?php
+                }
+                ?>
+                    <?php
+                if(isset($site_brand['headerColor'])){
+                    ?>
+                    
+                    .header-inner{
+                        background:<?=$site_brand['headerColor']?> none repeat scroll 0 0
+                    }
+                    <?php
+                }
+                ?>                   
+                    </style>
+             <?php
+            }
         ?>
     	<div class="logo"><a href="<?= Url::to('',true)?>"><img src="<?= isset($site_brand['logoFile'])? '/logo/'.$site_brand['logoFile'] :
             '/designassets/images/logo.png'?>"></a></div>
@@ -47,7 +83,7 @@ $appasset->css[] = 'css/responsive.css';
     
     
     
-   <?php $this->endBody() ?>
+   <?php $this->endBody() ?>  
   </body>
 </html>
 <?php $this->endPage() ?>

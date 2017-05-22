@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
                                         <a href="#"><em><img src="/designassets/images/logo-google.png" alt=""></em> <span>Sign in with Google</span></a>
                                     </li>
                                     <li class="login-facebook">
-                                        <a href="#"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+                                        <a href="javascript:void(0)" onclick="FeatureTrackFBLogin()"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
                                     </li>
                                     <li class="login-twitter">
                                         <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
