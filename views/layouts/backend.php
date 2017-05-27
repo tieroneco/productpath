@@ -23,16 +23,20 @@ AppAdminAsset::register($this);
     <?php $this->head() ?>
     <base href="/admin">
   </head>
-  <body>
+  <body>     
       <?php $this->beginBody() ?>
+      <?php        
+            $site_brand = $this->params['site_brand'];            
+            
+        ?>
     <div class="header header-inner clearfix">
-    	<div class="logo"><a href="javscript:void(0)"><img src="/designassets/images/logo.png"></a></div>
+    	<div class="logo"><a href="javascript:void(0);" id="logo_image"><img src="<?= isset($site_brand['logoFile'])? '/logo/'.$site_brand['logoFile'] :
+            '/designassets/images/logo.png'?>"></a></div>
         <div class="admin-header-loginbox clearfix">
             <span class="sign-up-link btn admin-btn submit-btn" onclick="javascript:window.location.href='/'">Visit Site</span>
             <span class="login-link btn" onclick="javascript:window.location.href='admin/logout'">Logout</span><div class="free-text">Email Support </div>
         </div>
-	</div>
- 
+	</div> 
   <?= $content?>
    
     

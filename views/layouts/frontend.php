@@ -24,8 +24,18 @@ $appasset->css[] = 'css/responsive.css';
     <?php $this->head() ?>
     <base href="/">
   </head>
-  <body>
+  <body>      
       <?php $this->beginBody() ?>
+      <?php
+        if(yii::$app->session->hasFlash('ideaSubmitted')){
+      ?>
+      <div class="popup-header">
+  	<div class="popup-out"><a href="#"><img src="images/cress1.png"></a></div>
+  	<div class="popup-header-right"><a href="#"><i class="fa fa-facebook-square"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"> <i class="fa fa-google"></i></a>
+    </div>
+  	<div class="popup-header-left"><strong>BOOM!</strong> Thanks, Your idea has been posted and an admin has been notified. Share your idea to get votes! </div>
+  </div>
+        <?php }?>
     <div class="header header-inner clearfix"> 
         <?php        
             $site_brand = $this->params['site_brand'];            
@@ -36,8 +46,15 @@ $appasset->css[] = 'css/responsive.css';
                 if(isset($site_brand['navButtonColor'])){
                     ?>
                     
-                    .shorting-box .submit-btn{
-                        background:<?=$site_brand['navButtonColor']?>
+                    .shorting-box .btn.custom-btn.active-btn{
+                        background:<?=$site_brand['navButtonColor']?> !important;
+                    }
+                    .vote-count .vote{
+                        color:<?=$site_brand['navButtonColor']?> !important;
+                        
+                    }
+                    .vote-box .like:hover{
+                        background-color:<?=$site_brand['navButtonColor']?> !important;
                     }
                     <?php
                 }
@@ -46,7 +63,7 @@ $appasset->css[] = 'css/responsive.css';
                 if(isset($site_brand['headerTextColor'])){
                     ?>
                     
-                    .header-inner .tagline-btn{
+                    .header-inner .tagline,.company-mane a{
                         color:<?=$site_brand['headerTextColor']?>
                     }
                     <?php

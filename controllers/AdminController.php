@@ -59,10 +59,12 @@ class AdminController extends Controller{
             $this->enableCsrfValidation = false;
         }
         $this->enableCsrfValidation = false;
-        return parent::beforeAction($action);
+        $return  = parent::beforeAction($action);
+        $site_brand = SiteBrand::findOne(['siteId' => \yii::$app->params['site']->id]);
+        $this->view->params['site_brand'] = $site_brand;
+        return $return;
     }
-    function actionIndex(){
-        var_dump(\yii::$app->user->id);
+    function actionIndex(){        
         return $this->render('adminhome');
     }
     function actionChangeState(){

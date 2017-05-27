@@ -92,7 +92,8 @@ class SiteController extends Controller
             $site = $user->sites[0];
             $site->state =1;
             $site->save();
-            return $this->redirect($site->subDomain);
+            \yii::$app->user->login($user);
+            return $this->redirect($site->subDomain.'/admin');
             
         }else{
             $this->render('index');
@@ -203,6 +204,10 @@ class SiteController extends Controller
                     if(isset($role['superAdmin'])){
                         \yii::$app->user->login($user);
                         return $this->redirect('/admin');
+                    }elseif(isset($role['admin'])){
+                        $site = $user->sites[0];
+                        \yii::$app->user->login($user);
+                        return $this->redirect(\yii\helpers\Url::to($site->subDomain . '/admin', false));
                     }else{
                         $model->addError('email','User is ont privilaged');
                     }
