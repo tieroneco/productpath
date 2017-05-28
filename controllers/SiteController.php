@@ -156,6 +156,9 @@ class SiteController extends Controller {
     public function actionSubmit() {
         $ideaModel = new Idea;
         $ideaUserModel = new IdeaUser;
+        $owner = \yii::$app->params['site']->user;
+        $site = \yii::$app->params['site'];
+        
         if (\yii::$app->request->isPost && $ideaModel->load(\yii::$app->request->post()) && $ideaUserModel->load(\yii::$app->request->post()) && $ideaUserModel->validate()
         ) {
             $ideaUser = IdeaUser::findOne(['email' => $ideaUserModel->email]);
@@ -171,6 +174,18 @@ class SiteController extends Controller {
                 $ideaModel->siteId = \yii::$app->params['site']->id;
                 $ideaModel->save();
                 \yii::$app->session->setFlash('ideaSubmitted');
+                
+                if($owner->receive_email ==1 && \yii::$app->params['mailSent']){
+                    try{
+                    Yii::$app->mailer->compose('layouts/ideaposted', compact('ideaUser','ideaModel', 'owner','site'))
+                    ->setFrom('from@domain.com')
+                    ->setTo($owner->email)
+                    ->setSubject("A new site has been submitted at {$site->subDomain} ")
+                    ->send();
+                    }catch(Exception $e){
+                        $mail_sent = false;
+                    }
+                }
                 return $this->redirect("/");
             }
         }

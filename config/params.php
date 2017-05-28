@@ -6,4 +6,5 @@ return [
     'AuthFB'=>1,
     'AuthTW'=>2,
     'AuthGP'=>3,
+    'mailSent'=>1
 ];
