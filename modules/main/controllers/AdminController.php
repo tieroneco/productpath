@@ -28,7 +28,7 @@ class AdminController extends Controller{
                     [
                         'actions' => ['index','logout', 'pass-reset','delete'],
                         'allow' => true,
-                        'roles' => ['superAdmin'],
+                        'roles'=>['superAdmin','?']
                     ]
                 ],
             ],

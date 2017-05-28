@@ -20,6 +20,8 @@ AppAsset::register($this);
         <title>FeatureTrack</title>
         <?= Html::csrfMetaTags() ?>
         <?php $this->head() ?>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <meta name="google-signin-client_id" content="580743083689-l0mo4ibsgbn0ov2dsbfn9s9roec15f8h.apps.googleusercontent.com">
     </head>
     <body>
         <?php $this->beginBody() ?>

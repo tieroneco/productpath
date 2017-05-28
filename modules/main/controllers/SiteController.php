@@ -27,18 +27,14 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout','register','login'],
+                'only' => ['logout','register'],
                 'rules' => [
                     [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
-                    ],
-                    [
-                        'actions'=>['register','login'],
-                        'allow'=>true,
-                        'roles'=>['?']
                     ]
+                    
                 ],
             ],
             'verbs' => [
@@ -66,7 +62,37 @@ class SiteController extends Controller
         ];
     }
     
-    
+    public function actionFbLogin(){
+        \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+       if(\yii::$app->request->isPost){
+           $p = yii::$app->request->post();
+           if($p){
+               
+               $user = User::find()
+                       ->where(['active'=>1])
+                       ->andWhere(['email'=>$p['email']])
+                       ->joinWith('sites')
+                       //->andWhere(['site.id'=>\yii::$app->params['site']->id])                       
+                       ->one();
+               if($user){
+                   $role = \Yii::$app->authManager->getRolesByUser($user->id);
+                   if(isset($role['superAdmin'])){
+                       \yii::$app->user->login($user);
+                       return \yii\helpers\Url::to('/admin');
+                   }elseif(isset($role['admin'])){
+                       \yii::$app->user->login($user);
+                       $site = $user->sites[0];
+                       return $site['subDomain'].'/admin';
+                   }
+                   else{
+                       return '/admin';
+                   }
+                   
+               }
+           }
+       }
+       return 0;
+    }
     
     /**
      * Displays homepage.
