@@ -36,7 +36,7 @@ class Idea extends IdeaDb{
                 $ideas=$ideas->andWhere(['like','body',$q])->orWhere(['like','title',$q]);
         }
         $ideas =$ideas->offset($offset)
-        ->limit($count)->asArray()->all();   
+        ->limit(\yii::$app->params['defaultLimit'])->asArray()->all();   
         
         
         return $ideas;

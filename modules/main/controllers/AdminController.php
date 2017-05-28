@@ -76,7 +76,7 @@ class AdminController extends Controller {
                     ->orWhere(['like', 'u.email', $s]);
         }
         $sites = $sites->offset($offset)
-                ->limit(2)
+                ->limit(\yii::$app->params['defaultLimit'])
                 ->all();
         if ($sites) {
             foreach ($sites as $k => &$site) {
