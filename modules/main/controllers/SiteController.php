@@ -65,7 +65,7 @@ class SiteController extends Controller
     public function actionFbLogin(){
         \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
        if(\yii::$app->request->isPost){
-           $p = yii::$app->request->post();
+           $p = yii::$app->request->post();           
            if($p){
                
                $user = User::find()

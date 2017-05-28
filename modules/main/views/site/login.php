@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
            type:'post',
            dataType:'json',
            success:function(r){
-               if(r){
+               if(r){                   
                 window.location.href=r;
                 }else if(r == 0){
                     $('.login-head h2').text('Can\'t Authenticate' );
