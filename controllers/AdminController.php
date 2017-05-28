@@ -45,7 +45,7 @@ class AdminController extends Controller{
                     ],                    
                 ],
                 'denyCallback'=>function(){                    
-                    return $this->redirect('http://'.\yii::$app->params['domainName'].'');
+                    return $this->redirect('http://'.\yii::$app->params['domainName'].'/site/login');
                 }
             ],
         ];

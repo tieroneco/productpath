@@ -170,6 +170,7 @@ class SiteController extends Controller {
             if ($ideaModel->validate()) {
                 $ideaModel->siteId = \yii::$app->params['site']->id;
                 $ideaModel->save();
+                \yii::$app->session->setFlash('ideaSubmitted');
                 return $this->redirect("/");
             }
         }

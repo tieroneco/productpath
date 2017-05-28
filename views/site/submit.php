@@ -33,8 +33,7 @@ use yii\widgets\ActiveForm;
 
                         <?=
                         $form->field($ideaUserModel, 'email', [
-                            'template' => '{label}' . "\n" . '<div class="social-login-box clearfix">{input}<div class="social-icon-box">Or sign in <a href="#"><img src="images/fa.png"></a><a href="#"><img src="images/twi.png"></a><a href="#"><img src="images/gool.png"></a>                                 	
-                                </div>' . "\n" . '{error}</div>'
+                            'template' => '{label}' . "\n{input}" .  '{error}</div>'
                         ])->textInput(['class' => ['form-control mediumwidth']])
                         ?>
                         <?=

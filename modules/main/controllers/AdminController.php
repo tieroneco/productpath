@@ -30,6 +30,7 @@ class AdminController extends Controller{
                         'allow' => true,
                         'matchCallback'=>function(){
                             $user = \yii::$app->user->identity;
+                            if(!$user) return false;
                             $role = \yii::$app->authManager->getRolesByUser($user->id);
                             if(isset($role['admin'])){
                                 $site = $user->sites[0];

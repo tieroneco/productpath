@@ -53,6 +53,25 @@ use yii\widgets\ActiveForm;
         'onfailure': onFailure
       });
     }
+    //<?php
+//        $ch = curl_init();
+//        curl_setopt($ch, CURLOPT_URL, 'https://api.twitter.com/oauth/request_token');
+//        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,false);
+//        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,false);
+//        curl_setopt($ch, CURLOPT_HEADER, array(
+//            'OAuth oauth_nonce="K7ny27JTpKVsTgdyLdDfmQQWVLERj2zAK5BslRsqyw"',
+//            'OAuth oauth_callback="'. urlencode('https://'.\yii::$app->params['domainName'].'/site/login').'"',
+//            'oauth_consumer_key=cART2ssNGs16noAp5HVu995ZR',
+//            'oauth_signature="F1Li3tvehgcraF8DMJ7OyxO4w9Y%3D"',
+//            'oauth_signature_method="HMAC-SHA1"',
+//            'oauth_timestamp="'.time(),
+//            'oauth_version="1.0"'
+//        ));
+//        $result = curl_exec($ch);
+//        
+//        var_dump(curl_error($ch));exit;
+//        
+//    ?>
 </script>
 <style>
     .abcRioButtonContentWrapper span{font-size: 11px !important;}

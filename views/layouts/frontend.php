@@ -30,8 +30,8 @@ $appasset->css[] = 'css/responsive.css';
         if(yii::$app->session->hasFlash('ideaSubmitted')){
       ?>
       <div class="popup-header">
-  	<div class="popup-out"><a href="#"><img src="images/cress1.png"></a></div>
-  	<div class="popup-header-right"><a href="#"><i class="fa fa-facebook-square"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"> <i class="fa fa-google"></i></a>
+  	<div class="popup-out"><a href="javascript:void(0)"><img src="images/cress1.png"></a></div>
+  	<div class="popup-header-right" style="display:none"><a href="#"><i class="fa fa-facebook-square"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"> <i class="fa fa-google"></i></a>
     </div>
   	<div class="popup-header-left"><strong>BOOM!</strong> Thanks, Your idea has been posted and an admin has been notified. Share your idea to get votes! </div>
   </div>
@@ -101,6 +101,14 @@ $appasset->css[] = 'css/responsive.css';
     
     
    <?php $this->endBody() ?>  
+      <script type="text/javascript">
+          
+          $(document).ready(function(){
+              $(document).on('click','.popup-out a', function(){
+                  $('.popup-header').remove();
+              })
+          })
+      </script>
   </body>
 </html>
 <?php $this->endPage() ?>
