@@ -42,8 +42,7 @@ AppAdminAsset::register($this);
     
     
     
-    <?php $this->endBody() ?>
-    
+    <?php $this->endBody() ?>    
   </body>
 </html>
 <?php $this->endPage() ?>

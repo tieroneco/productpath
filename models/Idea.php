@@ -7,23 +7,25 @@ use app\models\activerecords\Idea as IdeaDb;
 class Idea extends IdeaDb{
     
     public static function getideasByFilter($filter,$offset=0,$count=2,$q=''){
-        
+        $role=\Yii::$app->authManager->getRolesByUser(\yii::$app->user->id);
         $ideas = Self::find()
                 ->select("idea.*, owner.name as owner_name,owner.email as owner_email,owner.id as owner_user_id"
                         . ",(select count(*) from comment where comment.ideaId = idea.id) as ccnt")
                 ->joinWith("ideaUser")
                 ->joinWith("site")
                 ->join("inner join", "user owner", "{{owner}}.id=site.user_id")
-                ->where(['siteId'=> \yii::$app->params['site']->id])
-                ->andWhere(['!=','status',-1]);
+                ->where(['siteId'=> \yii::$app->params['site']->id]);
+        if(!isset($role['admin'])){
+            $ideas = $ideas->andWhere(['!=','status',-1]);
+        }
+                
                 
         //echo $ideas->createCommand()->sql;exit;
         switch($filter){
-            case 'top':
+            case 'top':                
                 $ideas=$ideas->orderBy('idea.votes desc');
                 break;
-            case 'new':
-                //echo 33;exit;
+            case 'new':                
                 $ideas=$ideas->orderBy('idea.id desc');                
                 break;
             case 'live':               
@@ -32,7 +34,7 @@ class Idea extends IdeaDb{
             case 'rejected':
                 $ideas=$ideas->andWhere(['status'=>0]);
                 break;
-            case 'search':
+            case 'search':                
                 $ideas=$ideas->andWhere(['like','body',$q])->orWhere(['like','title',$q]);
         }
         $ideas =$ideas->offset($offset)

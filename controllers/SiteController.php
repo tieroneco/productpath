@@ -172,6 +172,7 @@ class SiteController extends Controller {
             $ideaModel->createdAt = time();
             if ($ideaModel->validate()) {
                 $ideaModel->siteId = \yii::$app->params['site']->id;
+                $ideaModel->status = -1;
                 $ideaModel->save();
                 \yii::$app->session->setFlash('ideaSubmitted');
                 

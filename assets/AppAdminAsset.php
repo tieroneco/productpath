@@ -17,11 +17,14 @@ class AppAdminAsset extends AssetBundle
 {
     public $basePath = '@webroot/designassets';
     public $baseUrl = '@web/designassets';
-    public $css = [
+    public $css = [        
+        
+        'css/colorpicker.css',
         'css/admin.css',
-        'css/responsive.css'
+        'css/responsive.css',
     ];
     public $js = [
+        'js/colorpicker.js'
     ];
     public $depends = [
         'app\assets\AppAsset'

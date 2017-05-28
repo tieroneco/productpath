@@ -33,7 +33,7 @@ $appasset->css[] = 'css/responsive.css';
   	<div class="popup-out"><a href="javascript:void(0)"><img src="images/cress1.png"></a></div>
   	<div class="popup-header-right" style="display:none"><a href="#"><i class="fa fa-facebook-square"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"> <i class="fa fa-google"></i></a>
     </div>
-  	<div class="popup-header-left"><strong>BOOM!</strong> Thanks, Your idea has been posted and an admin has been notified. Share your idea to get votes! </div>
+  	<div class="popup-header-left"><strong>BOOM!</strong> Thanks, Your idea has been posted and an admin has been notified to moderate.</div>
   </div>
         <?php }?>
     <div class="header header-inner clearfix"> 
