@@ -28,7 +28,20 @@ class AdminController extends Controller{
                     [
                         'actions' => ['index','logout', 'pass-reset','delete'],
                         'allow' => true,
-                        'roles'=>['superAdmin','?']
+                        'matchCallback'=>function(){
+                            $user = \yii::$app->user->identity;
+                            $role = \yii::$app->authManager->getRolesByUser($user->id);
+                            if(isset($role['admin'])){
+                                $site = $user->sites[0];
+                                return $this->redirect($site->subDomain .'/admin');
+                            }else if(isset($role['admin'])){
+                                return $this->redirect('/admin');
+                            }elseif(\yii::$app->user->isGuest){
+                                return false;
+                            }else{
+                                return true;
+                            }
+                        }
                     ]
                 ],
             ],

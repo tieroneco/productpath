@@ -1,8 +1,38 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
 ?>
+<script type="text/javascript">
+ // google oauth client id 580743083689-l0mo4ibsgbn0ov2dsbfn9s9roec15f8h.apps.googleusercontent.com
+ var gclick = 0;
+   function onSuccess(googleUser) {
+       ++gclick;
+      if(gclick<2)
+          return; 
+       var basicProfile = googleUser.getBasicProfile();
+      $('#register-form #registerform-email').val(basicProfile.getEmail()).attr('readonly',true);
+                   $('#register-form #registerform-password').val(basicProfile.getId()).closest('.form-group').hide()
+                   $('#register-form #registerform-confirmpassword').val(basicProfile.getId()).closest('.form-group').hide();
+                   $('#register-form').append('<input type="hidden" name="social" value="GP">');                   
+    }
+    function onFailure(error) {
+      console.log(error);
+    }
+    function renderButton() {
+      gapi.signin2.render('g-signin2', {
+        'scope': 'profile email',
+        'width': 165,
+        'height': 40,
+        'longtitle': true,
+        'theme': 'dark',
+        'onsuccess': onSuccess,
+        'onfailure': onFailure
+      });
+    }
+</script>
+<style>
+    .abcRioButtonContentWrapper span{font-size: 11px !important;}
+</style>
 <div class="container">
         	<div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -24,7 +54,8 @@ use yii\widgets\ActiveForm;
                         <div class="login-footer">
                         	<ul>
                             	<li class="login-g-plus">
-                                	<a href="#"><em><img src="/images/logo-google.png" alt=""></em> <span>Sign in with Google</span></a>
+                                    <div id="g-signin2" style="font-size:12px"></div>
+<!--                                	<a href="#"><em><img src="/images/logo-google.png" alt=""></em> <span>Sign in with Google</span></a>-->
                                 </li>
                                 <li class="login-facebook">
                                     <a href="javscript:void();" onclick="FBregisterWithProduct()"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>

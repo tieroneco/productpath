@@ -27,7 +27,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout','register'],
+                'only' => ['logout'],
                 'rules' => [
                     [
                         'actions' => ['logout'],
@@ -118,10 +118,11 @@ class SiteController extends Controller
             $site = $user->sites[0];
             $site->state =1;
             $site->save();
-            \yii::$app->user->login($user);
+            \yii::$app->user->login($user);            
             return $this->redirect($site->subDomain.'/admin');
             
         }else{
+            echo 4;exit;
             $this->render('index');
         }
         
@@ -167,8 +168,10 @@ class SiteController extends Controller
                         $ideaUser->authType = @\yii::$app->params['Auth'.$p['social']];
                         $ideaUser->authUserId = $model->password;
                         $ideaUser->createdAt = time();
-                        if($p['_firstname']){
+                        if(isset($p['_firstname'])){
                             $ideaUser->name = $p['_firstname'];
+                        }else{
+                            $ideaUser->name = 'no name';
                         }
                         if(!$ideaUser->save()){
                             throw new \yii\base\UserException('Social user could not be saved');

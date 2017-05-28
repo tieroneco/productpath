@@ -47,15 +47,7 @@ class SiteController extends Controller {
                         'actions' => ['login'],
                         'allow' => true,
                         'roles' => ['?']                        
-                        ],
-                        [
-                        'actions' => ['login'],
-                        'allow' => false,
-                        'roles' => ['admin'],
-                        'denyCallback' => function() {
-                            return $this->redirect('/admin');
-                        }
-                        ],
+                        ],                        
                 ]
             ],
         ];

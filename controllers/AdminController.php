@@ -41,9 +41,12 @@ class AdminController extends Controller{
                     [
                         'allow' => true,
                         //'actions' => ['index', 'change-state', 'reply', 'save-brand', 'get-brand'],
-                        'roles' => ['admin','?'],
+                        'roles' => ['admin'],
                     ],                    
                 ],
+                'denyCallback'=>function(){                    
+                    return $this->redirect('http://'.\yii::$app->params['domainName'].'');
+                }
             ],
         ];
         
