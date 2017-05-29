@@ -73,7 +73,7 @@ $appasset->css[] = 'css/responsive.css';
                 if(isset($site_brand['headerColor'])){
                     ?>
                     
-                    .header-inner{
+                    .header-inner,.popup-header{
                         background:<?=$site_brand['headerColor']?> none repeat scroll 0 0
                     }
                     <?php
@@ -86,7 +86,18 @@ $appasset->css[] = 'css/responsive.css';
     	<div class="logo"><a href="<?= Url::to('',true)?>"><img src="<?= isset($site_brand['logoFile'])? '/logo/'.$site_brand['logoFile'] :
             '/designassets/images/logo.png'?>"></a></div>
         <div class="tagline"><?= isset($site_brand['headerText']) ? $site_brand['headerText'] : 'Send in your product ideas!'?></div>
-        <div class="company-mane"><a href="<?= Url::to('https://'.(isset($site_brand['logoAltText']) ? $site_brand['logoAltText'] : yii::$app->params['domainName']))?>"><?= isset($site_brand['logoAltText']) ? $site_brand['logoAltText']: 'FeatureTrack.co'?></a></div>
+        <?php
+            if(\yii::$app->user->isGuest){
+             ?>
+             <div class="company-mane"><a href="<?= Url::to('https://'.(isset($site_brand['logoAltText']) ? $site_brand['logoAltText'] : yii::$app->params['domainName']))?>"><?= isset($site_brand['logoAltText']) ? $site_brand['logoAltText']: 'FeatureTrack.co'?></a></div>
+                 <?php   
+            }else{
+              ?>
+             <div class="company-mane"><a href="<?= Url::to('/admin')?>"><?= 'Admin'?></a></div>
+              <?php  
+            }
+        ?>
+        
 	</div>  
   <?= $content?>
   

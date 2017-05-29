@@ -27,7 +27,8 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'js/bootstrap.js',
-        'js/facebook.js'
+        'js/facebook.js',
+        'js/jquery.ghostinput.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
