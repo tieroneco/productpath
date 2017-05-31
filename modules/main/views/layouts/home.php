@@ -24,6 +24,8 @@ AppAsset::register($this);
   </head>
   <body>
       <?php $this->beginBody() ?>
+     <div id="wrap">
+     <div id="main"> 
   	<div class="bg-image"></div>
     <div class="header clearfix home-header">
     	<div class="logo"><a href="#"><img src="/images/logo-white.png"></a></div>
@@ -40,8 +42,28 @@ AppAsset::register($this);
             </div>
         </div>
     </div>
+
+    </div>
     
     <?php $this->endBody() ?>
+    <script type="text/javascript">
+      jQuery(window).load(function(){
+  
+        jQuery(".top-create-site").ghostInput({
+           ghostText:".featuretrack.co",
+               ghostPlaceholder:".yourproduct.featuretrack.co",
+               ghostTextClass: "ghost-text"
+        });
+  
+        jQuery(".bottom-create-site").ghostInput({
+           ghostText:".featuretrack.co",
+               ghostPlaceholder:".yourproduct.featuretrack.co",
+               ghostTextClass: "ghost-text"
+        });
+  
+      });
+
+    </script>
   </body>
 </html>
 <?php $this->endPage() ?>

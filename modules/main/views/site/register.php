@@ -37,7 +37,7 @@ use yii\widgets\ActiveForm;
         	<div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="login-logo">
-                    	<a href="#"><img src="/images/logo-white.png" alt=""></a>
+                    	<a href="/"><img src="/images/logo-white.png" alt=""></a>
                     </div>
                     
                     <div class="login creat_acc-popup">

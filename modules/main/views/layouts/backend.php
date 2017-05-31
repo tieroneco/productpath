@@ -25,6 +25,8 @@ AppAdminAsset::register($this);
     </head>
     <body>
         <?php $this->beginBody() ?>
+        <div id="wrap">
+      <div id="inner-main">   
         <div class="header header-inner clearfix">
             <div class="logo"><a href="/admin"><img src="images/logo.png"></a></div>
             <div class="admin-header-loginbox clearfix">

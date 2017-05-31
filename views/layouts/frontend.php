@@ -29,6 +29,8 @@ $appasset->css[] = 'css/responsive.css';
       <?php
         if(yii::$app->session->hasFlash('ideaSubmitted')){
       ?>
+      <div id="wrap">
+      <div id="inner-main">   
       <div class="popup-header">
   	<div class="popup-out"><a href="javascript:void(0)"><img src="images/cress1.png"></a></div>
   	<div class="popup-header-right" style="display:none"><a href="#"><i class="fa fa-facebook-square"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"> <i class="fa fa-google"></i></a>
@@ -100,7 +102,11 @@ $appasset->css[] = 'css/responsive.css';
         
 	</div>  
   <?= $content?>
+
+  </div>
+  </div>
   
+    <div id="inner-footer">
    <div class="copyright">
     	<div class="container">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -108,7 +114,7 @@ $appasset->css[] = 'css/responsive.css';
             </div>
         </div>
     </div>
-    
+    </div>
     
     
    <?php $this->endBody() ?>  

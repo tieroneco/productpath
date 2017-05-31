@@ -21,7 +21,7 @@ AppAsset::register($this);
         <?= Html::csrfMetaTags() ?>
         <?php $this->head() ?>
         <script src="https://apis.google.com/js/platform.js?onload=renderButton&t=<?=time()?>" async defer></script>
-        <meta name="google-signin-client_id" content="580743083689-3c9rk5p0kn4ikgr6q1710uhi8c97priq.apps.googleusercontent.com">
+        <meta name="google-signin-client_id" content="580743083689-l0mo4ibsgbn0ov2dsbfn9s9roec15f8h.apps.googleusercontent.com">
     </head>
     <body>
         <?php $this->beginBody() ?>
@@ -31,7 +31,7 @@ AppAsset::register($this);
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="login-logo">
-                            <a href="#"><img src="/designassets/images/logo-white.png" alt=""></a>
+                            <a href="/"><img src="/designassets/images/logo-white.png" alt=""></a>
                         </div>
                         <?= $content ?>
                         <div  class="creat_acount_link"><a href="/site/register">Create Account</a></div>
