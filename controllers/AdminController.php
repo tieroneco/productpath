@@ -65,7 +65,9 @@ class AdminController extends Controller{
         $return  = parent::beforeAction($action);
         $site_brand = SiteBrand::findOne(['siteId' => \yii::$app->params['site']->id]);
         $this->view->params['site_brand'] = $site_brand;
-        return $return;
+        $site = \yii::$app->user->identity->sites[0];
+        
+        return ($return && ($site->id == \yii::$app->params['site']->id));
     }
     function actionIndex(){        
         return $this->render('adminhome');

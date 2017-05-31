@@ -89,7 +89,12 @@ $appasset->css[] = 'css/responsive.css';
             '/designassets/images/logo.png'?>"></a></div>
         <div class="tagline"><?= isset($site_brand['headerText']) ? $site_brand['headerText'] : 'Send in your product ideas!'?></div>
         <?php
-            if(\yii::$app->user->isGuest){
+            $site = null;
+            $user = yii::$app->user->identity;
+            if($user){
+                $site = $user->sites[0];
+            }
+            if(\yii::$app->user->isGuest || ($site && $site->id != \yii::$app->params['site']->id)){
              ?>
              <div class="company-mane"><a href="<?= Url::to('https://'.(isset($site_brand['logoAltText']) ? $site_brand['logoAltText'] : yii::$app->params['domainName']))?>"><?= isset($site_brand['logoAltText']) ? $site_brand['logoAltText']: 'FeatureTrack.co'?></a></div>
                  <?php   
