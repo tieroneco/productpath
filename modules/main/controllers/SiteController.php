@@ -12,7 +12,6 @@ use app\models\User;
 use app\models\Site;
 use \app\models\IdeaUser;
 
-//++ TODO DELETE
 
 
 class SiteController extends Controller {
@@ -24,13 +23,28 @@ class SiteController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['logout','login'],
                 'rules' => [
                         [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
-                    ]
+                    ],[
+		'actions'=>['login'],
+		'allow'=>true,
+		'matchCallback'=>function(){
+			if($user  = \yii::$app->User->identity){
+				$site = $user->sites;
+				if($site && isset($site[0])){
+					return $this->redirect($site[0]->subDomain.'/admin');
+				}else{
+					return $this->redirect('//'.\yii::$app->params['domainName'].'/admin');
+				}
+			}else{
+				return true;
+			}		
+		}
+		]
                 ],
             ],
             'verbs' => [

@@ -67,10 +67,12 @@ class AdminController extends Controller{
         $this->view->params['site_brand'] = $site_brand;
         if($return){
             $site = \yii::$app->user->identity->sites[0];
+	    if($site->id != \yii::$app->params['site']->id){
+		return $this->redirect($site->subDomain.'/admin')	;
+	    }	
         }else{
             return $return;
         }
-        
         
         return ($return && ($site->id == \yii::$app->params['site']->id));
     }

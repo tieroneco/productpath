@@ -48,7 +48,18 @@ class SiteController extends Controller {
                         'allow' => true,
                         'roles' => ['?']                        
                         ],                        
-                ]
+                ],
+		'denyCallback'=>function(){
+			$user = \yii::$app->User->identity;
+			if($user){
+				$site = $user->sites;
+				if($site && isset($site[0])){
+					return $this->redirect($site[0]->subDomain.'/admin');
+				}else{
+					return $this->redirect('//'. \yii::$app->params['domainName'].'/admin');
+				}
+			}			
+		}
             ],
         ];
 
