@@ -29,8 +29,9 @@ $appasset->css[] = 'css/responsive.css';
       <?php
         if(yii::$app->session->hasFlash('ideaSubmitted')){
       ?>
-      <div id="wrap">
-      <div id="inner-main">   
+
+      
+
       <div class="popup-header">
   	<div class="popup-out"><a href="javascript:void(0)"><img src="images/cress1.png"></a></div>
   	<div class="popup-header-right" style="display:none"><a href="#"><i class="fa fa-facebook-square"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"> <i class="fa fa-google"></i></a>
@@ -38,6 +39,8 @@ $appasset->css[] = 'css/responsive.css';
   	<div class="popup-header-left"><strong>BOOM!</strong> Thanks, Your idea has been posted and an admin has been notified to moderate.</div>
   </div>
         <?php }?>
+     <div id="wrap">
+      <div id="inner-main">   
     <div class="header header-inner clearfix"> 
         <?php        
             $site_brand = $this->params['site_brand'];            
@@ -47,10 +50,38 @@ $appasset->css[] = 'css/responsive.css';
                 <?php
                 if(isset($site_brand['navButtonColor'])){
                     ?>
+
+                    .shorting-box .btn.custom-btn:hover{
+                        color: <?=$site_brand['navButtonColor']?> !important;
+                    }
                     
                     .shorting-box .btn.custom-btn.active-btn{
                         background:<?=$site_brand['navButtonColor']?> !important;
+                        border-color: <?=$site_brand['navButtonColor']?> !important;
+                        color: #fff !important;
                     }
+
+                    
+
+                    .load-btn-box .load-btn:hover{
+                        background:<?=$site_brand['navButtonColor']?> !important;
+                        border-color: <?=$site_brand['navButtonColor']?> !important;
+                    }
+
+                    .copyright a{
+                         color:<?=$site_brand['navButtonColor']?> !important;
+                    }
+
+
+                    .reply-content{
+                      background:<?=$site_brand['navButtonColor']?> !important;
+                     
+                    }
+                    .reply-content:after{ border-color: transparent transparent <?=$site_brand['navButtonColor']?> transparent;}
+
+                    .comment-list .author-name .blue-text{color:<?=$site_brand['navButtonColor']?> !important;}
+
+
                     .vote-count .vote{
                         color:<?=$site_brand['navButtonColor']?> !important;
                         
@@ -68,6 +99,9 @@ $appasset->css[] = 'css/responsive.css';
                     .header-inner .tagline,.company-mane a{
                         color:<?=$site_brand['headerTextColor']?>
                     }
+
+                      
+
                     <?php
                 }
                 ?>
@@ -78,6 +112,13 @@ $appasset->css[] = 'css/responsive.css';
                     .header-inner,.popup-header{
                         background:<?=$site_brand['headerColor']?> none repeat scroll 0 0
                     }
+
+                    
+
+
+}
+
+
                     <?php
                 }
                 ?>                   
@@ -85,7 +126,7 @@ $appasset->css[] = 'css/responsive.css';
              <?php
             }
         ?>
-    	<div class="logo"><a href="<?= Url::to('',true)?>"><img src="<?= isset($site_brand['logoFile'])? '/logo/'.$site_brand['logoFile'] :
+    	<div class="logo"><a href="/"><img src="<?= isset($site_brand['logoFile'])? '/logo/'.$site_brand['logoFile'] :
             '/designassets/images/logo.png'?>"></a></div>
         <div class="tagline"><?= isset($site_brand['headerText']) ? $site_brand['headerText'] : 'Send in your product ideas!'?></div>
         <?php
@@ -108,8 +149,8 @@ $appasset->css[] = 'css/responsive.css';
 	</div>  
   <?= $content?>
 
-  </div>
-  </div>
+   </div><!--Wrap End-->
+    </div><!--Inner Main-->
   
     <div id="inner-footer">
    <div class="copyright">

@@ -50,14 +50,14 @@ AppAsset::register($this);
       jQuery(window).load(function(){
   
         jQuery(".top-create-site").ghostInput({
-           ghostText:".featuretrack.co",
-               ghostPlaceholder:".yourproduct.featuretrack.co",
+           ghostText:".hirewpexpert.com",
+               ghostPlaceholder:".yourproduct.hirewpexpert.com",
                ghostTextClass: "ghost-text"
         });
   
         jQuery(".bottom-create-site").ghostInput({
-           ghostText:".featuretrack.co",
-               ghostPlaceholder:".yourproduct.featuretrack.co",
+           ghostText:".hirewpexpert.com",
+               ghostPlaceholder:".yourproduct.hirewpexpert.com",
                ghostTextClass: "ghost-text"
         });
   

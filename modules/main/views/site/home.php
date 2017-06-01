@@ -10,7 +10,7 @@
                         'action'=>'/site/register'
                     ])?> 
                         <div class="ghost-text-wrap create-site-wrap">
-                    	   <input class="top-create-site" type="text" value="" name="site" placeholder="yourproduct.featuretrack.co">
+                    	   <input class="top-create-site" type="text" value="" name="site" placeholder="yourproduct.hirewpexpert.com">
                         </div>
                         <input type="submit" value="Create Site" class="btn custom-btn creat-btn">
                     <?php yii\widgets\ActiveForm::end()?>
@@ -102,7 +102,7 @@
                         'action'=>'/site/register'
                         ])?> 
                        <div class="ghost-text-wrap create-site-wrap bottom-create-site-wrap"> 
-                    	<input class="bottom-create-site" type="text" value="" name="site" placeholder="yourproduct.featuretrack.co">
+                    	<input class="bottom-create-site" type="text" value="" name="site" placeholder="yourproduct.hirewpexpert.com">
                         </div>
                         <input type="submit" value="Create Site" class="btn custom-btn creat-btn">
                         <?php yii\widgets\ActiveForm::end()?>
