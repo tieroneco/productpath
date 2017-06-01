@@ -15,7 +15,7 @@ class RegisterForm extends Model{
                 ['host','email','password'], 'required'
             ],
             ['email','email'],
-            ['confirmPassword','compare','compareAttribute'=>'password', 'whenClient'=>"function(attr,value){
+            ['confirmPassword','compare','message'=>'Passowrds do not match.','compareAttribute'=>'password', 'whenClient'=>"function(attr,value){
                 return $('#registerform-password').val()!=='';
             }",'when'=>function($model){
                 return $model->password !='';

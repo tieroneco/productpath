@@ -164,7 +164,7 @@ class SiteController extends Controller {
                     $site->createdAt = date('Y-m-d H:i:s');
                     if (!$site->validate() || !$site->save()) {
 
-                        throw new \yii\base\UserException('Site could not be saved');
+                        throw new \yii\base\UserException('Site could not be saved', 1000);
                     }
                     if (\yii::$app->request->post('social')) {
                         //this user used socail login
@@ -180,7 +180,7 @@ class SiteController extends Controller {
                             $ideaUser->name = 'no name';
                         }
                         if (!$ideaUser->save()) {
-                            throw new \yii\base\UserException('Social user could not be saved');
+                            throw new \yii\base\UserException('Social user could not be saved', 10001);
                         }
                     }
                     if (\yii::$app->params['mailSent']) {
@@ -196,7 +196,7 @@ class SiteController extends Controller {
                     }
                 } else {
 
-                    throw new \yii\base\UserException('User could not be saved');
+                    throw new \yii\base\UserException('User could not be saved', 10001);
                 }
                 $auth = \yii::$app->getAuthManager();
                 $auth->assign($auth->getRole('admin'), $user->id);
@@ -209,10 +209,12 @@ class SiteController extends Controller {
                             . 'to activate your account</a>');
                 }
                 //}) ;
-            } catch (\Exception $e) {
+            } catch (\yii\base\UserException $e) {
                 $transaction->rollBack();
                 $errors = array_merge($user->getErrors(), $site->getErrors());
-                $model->addError('email', $e->getMessage());
+                $error_field = ($e->getCode() == 1000) ? 'host' : 'email';
+                //echo $e->getCode(),$error_field;exit;
+                //$model->addError($error_field, $e->getMessage());
                 foreach ($errors as $attr => $error_details) {
                     foreach ($error_details as $error) {
                         switch ($attr) {
@@ -253,7 +255,7 @@ class SiteController extends Controller {
                         $model->addError('email', 'User is ont privilaged');
                     }
                 } else {
-                    $model->addError('email', 'User not authenitcated');
+                    $model->addError('password', 'Wrong password. Try again.');
                 }
             } else {
                 $model->addError('email', 'Not a valid user');

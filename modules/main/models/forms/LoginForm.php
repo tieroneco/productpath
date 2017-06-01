@@ -11,8 +11,9 @@ class LoginForm extends Model{
     
     public function rules(){
         return [
-            ['email','email','message'=>'This is not a valid email'],
-            [['email','password'],'required']
+            ['email','email','message'=>'This is not a valid email.'],
+            ['email','required','message'=>'Email required.'],
+            ['password', 'required', 'message'=>'Password required.']
         ];
     }
     
