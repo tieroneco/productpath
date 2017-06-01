@@ -32,8 +32,7 @@ AppAdminAsset::register($this);
      <div id="wrap">
       <div id="inner-main">   
     <div class="header header-inner clearfix">
-    	<div class="logo"><a href="javascript:void(0);" id="logo_image"><img src="<?= isset($site_brand['logoFile'])? '/logo/'.$site_brand['logoFile'] :
-            '/designassets/images/logo.png'?>"></a></div>
+    	<div class="logo"><a href="javascript:void(0);" id="logo_image"><img src="/designassets/images/logo.png"></a></div>
         <div class="admin-header-loginbox clearfix">
             <a href="/" class="sign-up-link btn admin-btn submit-btn">Visit Site</a>
             <span class="login-link btn" onclick="javascript:window.location.href='admin/logout'">Logout</span><div class="free-text">Email Support </div>
