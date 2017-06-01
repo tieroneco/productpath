@@ -107,7 +107,7 @@ class AdminController extends Controller{
         \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $model = new LogoUpload();
         $image_filename = '';
-        if(isset($_FILES['logoFile'])){            
+        if(isset($_FILES['logoFile']) && !$_FILES['logoFile']['error'] && $_FILES['logoFile']['size']){            
             $_FILES['LogoUpload[logoFile]']= $_FILES['logoFile'];
             unset($_FILES['logoFile']);
             $model->logoFile = UploadedFile::getInstance($model, 'logoFile');
@@ -127,6 +127,7 @@ class AdminController extends Controller{
        }else{
            $siteBrandModel = SiteBrand::findOne($site_brand['SiteBrand']['id']);
        }
+       $old_imagename = $siteBrandModel->logoFile;
        if($siteBrandModel && $siteBrandModel->load($site_brand) && $siteBrandModel->validate(1)){
            $siteBrandModel->siteId = \yii::$app->params['site']->id;
            if($image_filename){
@@ -138,6 +139,8 @@ class AdminController extends Controller{
                    
                }
                $siteBrandModel->logoFile = $image_filename;
+           }else{
+               $siteBrandModel->logoFile = $old_imagename;
            }
            $siteBrandModel->save(false);
            return $siteBrandModel->getAttributes();

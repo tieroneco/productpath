@@ -126,7 +126,7 @@ $appasset->css[] = 'css/responsive.css';
              <?php
             }
         ?>
-    	<div class="logo"><a href="/"><img src="<?= isset($site_brand['logoFile'])? '/logo/'.$site_brand['logoFile'] :
+    	<div class="logo"><a href="/"><img src="<?= isset($site_brand['logoFile']) && $site_brand['logoFile']? '/logo/'.$site_brand['logoFile'] :
             '/designassets/images/logo.png'?>"></a></div>
         <div class="tagline"><?= isset($site_brand['headerText']) ? $site_brand['headerText'] : 'Send in your product ideas!'?></div>
         <?php
