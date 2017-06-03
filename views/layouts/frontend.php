@@ -163,7 +163,8 @@ $appasset->css[] = 'css/responsive.css';
     </div>
     
     
-   <?php $this->endBody() ?>  
+   <?php $this->endBody() ?>
+      <script type="text/javascript" <script src="designassets/js/retina.min.js"></script>  
       <script type="text/javascript">
           
           $(document).ready(function(){

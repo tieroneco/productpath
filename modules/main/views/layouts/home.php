@@ -46,6 +46,7 @@ AppAsset::register($this);
     </div>
     
     <?php $this->endBody() ?>
+     <script type="text/javascript" <script src="designassets/js/retina.min.js"></script>
     <script type="text/javascript">
       jQuery(window).load(function(){
   
