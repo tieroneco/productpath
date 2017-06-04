@@ -20,7 +20,7 @@ AppAsset::register($this);
         <title>FeatureTrack</title>
         <?= Html::csrfMetaTags() ?>
         <?php $this->head() ?>
-        <script src="https://apis.google.com/js/platform.js?onload=renderButton&t=<?=time()?>" async defer></script>
+        <script src="https://apis.google.com/js/platform.js?onload=renderButton&t=<?= time() ?>" async defer></script>
         <meta name="google-signin-client_id" content="580743083689-l0mo4ibsgbn0ov2dsbfn9s9roec15f8h.apps.googleusercontent.com">
     </head>
     <body>
@@ -34,7 +34,17 @@ AppAsset::register($this);
                             <a href="/"><img src="/designassets/images/logo-white.png" alt=""></a>
                         </div>
                         <?= $content ?>
-                        <div  class="creat_acount_link"><a href="/site/register">Create Account</a></div>
+                        <?php
+                        if (yii::$app->session->getFlash('notice')) {
+                            ?>
+                        <div  class="creat_acount_link"><a href="/site/login">Already a member? Sign In</a></div>
+                        <?php }else {
+                                ?><div  class="creat_acount_link"><a href="/site/register">Create Account</a></div>
+                                <?php
+                            }
+                        
+                        ?>
+
                     </div>
                 </div>
             </div>

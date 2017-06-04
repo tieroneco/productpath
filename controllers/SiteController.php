@@ -80,6 +80,8 @@ class SiteController extends Controller {
         return $return;
     }
     
+    
+
     public function actionFbLogin(){
         \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
        if(\yii::$app->request->isPost){

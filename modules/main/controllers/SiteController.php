@@ -70,7 +70,14 @@ class SiteController extends Controller {
             ],
         ];
     }
-
+    public function actionNotice(){
+        $this->layout = 'login';
+        if(\yii::$app->session->hasFlash('notice') || 1){
+            return $this->render('notice');
+        }else{
+            throw new \yii\web\ForbiddenHttpException('This page has been expiered');
+        }
+    }
     public function actionFbLogin() {
         \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         if (\yii::$app->request->isPost) {
@@ -190,6 +197,7 @@ class SiteController extends Controller {
                                     ->setTo($model->email)
                                     ->setSubject("Successfull Registration At " . \yii::$app->params['domainName'])
                                     ->send();
+                            
                         } catch (Exception $e) {
                             $mail_sent = false;
                         }
@@ -202,13 +210,17 @@ class SiteController extends Controller {
                 $auth->assign($auth->getRole('admin'), $user->id);
                 $transaction->commit();
                 $session = \yii::$app->session;
+                $session->setFlash('notice','REGSUCCESS');
+                $session->setFlash('mail_sent',$mail_sent);
+                $session->setFlash('email',$model->email);
                 if ($mail_sent && \yii::$app->params['mailSent']) {
-                    $session->setFlash("registrationdone", "Your account has been successfully created,Please check our email");
+                    $session->setFlash("registrationdone", "Your account has been successfully created,Please check our email");                    
+                    
                 } else {
                     $session->setFlash("registrationdone", "Your account has been successfully created, Please " . '<a href="' . \yii\helpers\Url::to(['site/activate/?q=' . $user->activationKey], true) . '">Click Here '
                             . 'to activate your account</a>');
                 }
-                //}) ;
+                return $this->redirect('notice');
             } catch (\yii\base\UserException $e) {
                 $transaction->rollBack();
                 $errors = array_merge($user->getErrors(), $site->getErrors());
@@ -228,8 +240,8 @@ class SiteController extends Controller {
             }
         }
         //+ as there is no redirect so reinitialize the model value
-        if (isset($session))
-            $model = new RegisterForm;
+        //if (isset($session))
+            //$model = new RegisterForm;
 
         return $this->render("register", compact('model'));
     }
