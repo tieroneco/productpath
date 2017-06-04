@@ -210,6 +210,13 @@ class SiteController extends Controller {
         $idea = Idea::findOne($_POST['id']);
         if ($idea) {
             $idea->updateCounters(['votes' => 1]);
+            $command = \yii::$app->db->createCommand()
+                    ->insert('idea_ip',[
+                        'idea_id'=>$idea->id,
+                        'ip'=>\yii::$app->request->getUserIP()
+                    ])
+                    ->execute();
+            
             return true;
         }
         return false;
@@ -221,6 +228,8 @@ class SiteController extends Controller {
         $idea = Idea::findOne($_POST['id']);
         if ($idea) {
             $idea->updateCounters(['votes' => -1]);
+            $command = \yii::$app->db->createCommand("delete from idea_ip where idea_id = {$idea->id} and ip =:ip");
+            $command->bindValue(':ip',\yii::$app->request->getUserIP())->execute();
             return true;
         }
         return false;

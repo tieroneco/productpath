@@ -132,7 +132,7 @@ $appasset->css[] = 'css/responsive.css';
         <?php
             $site = null;
             $user = yii::$app->user->identity;
-            if($user){
+            if($user && $user->sites){
                 $site = $user->sites[0];
             }
             if(\yii::$app->user->isGuest || ($site && $site->id != \yii::$app->params['site']->id)){

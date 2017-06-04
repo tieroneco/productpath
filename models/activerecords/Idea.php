@@ -21,6 +21,7 @@ use Yii;
  * @property Comment[] $comments
  * @property Ideauser $ideaUser
  * @property Site $site
+ * @property IdeaIp[] $ideaIps
  * @property Reply[] $replies
  */
 class Idea extends \yii\db\ActiveRecord
@@ -89,6 +90,14 @@ class Idea extends \yii\db\ActiveRecord
     public function getSite()
     {
         return $this->hasOne(Site::className(), ['id' => 'siteId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdeaIps()
+    {
+        return $this->hasMany(IdeaIp::className(), ['idea_id' => 'id']);
     }
 
     /**
