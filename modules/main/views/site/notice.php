@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
                     <p> Please validate your email address in order to get started <p/>
 <!-- This p is experimental as the email is not working, once the email works this p will automatically removed-->
                    <?php
-                        if($session->hasFlash('mail_sent') && !$session->getFlash('mail_sent')){
+                        if($session->hasFlash('mail_sent') && $session->getFlash('mail_sent')=='No'){
                             ?>
                     <p class="email-click">
                         <?= $session->getFlash('registrationdone')?>

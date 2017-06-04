@@ -211,7 +211,7 @@ class SiteController extends Controller {
                 $transaction->commit();
                 $session = \yii::$app->session;
                 $session->setFlash('notice','REGSUCCESS');
-                $session->setFlash('mail_sent',$mail_sent);
+                $session->setFlash('mail_sent',($mail_sent ? 'Yes' : 'No'));
                 $session->setFlash('email',$model->email);
                 if ($mail_sent && \yii::$app->params['mailSent']) {
                     $session->setFlash("registrationdone", "Your account has been successfully created,Please check our email");                    
