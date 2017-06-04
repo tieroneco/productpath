@@ -146,7 +146,7 @@ class SiteController extends Controller {
     public function actionRegister() {
         //$this->layout = 'register';
         $model = new RegisterForm;
-        $mail_sent = true;
+        $mail_sent = (bool)\yii::$app->params['mailSent'];
         if ($sitename = (\yii::$app->request->get('site'))) {
             //$sitename = str_replace(['http://',''], $replace, $subject);
             $model->host = $sitename;
