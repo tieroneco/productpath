@@ -23,14 +23,14 @@ class SiteController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout','login'],
+                'only' => ['logout','login','register'],
                 'rules' => [
                         [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],[
-		'actions'=>['login'],
+		'actions'=>['login','register','activate'],
 		'allow'=>true,
 		'matchCallback'=>function(){
 			if($user  = \yii::$app->User->identity){

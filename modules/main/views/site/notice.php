@@ -24,6 +24,7 @@ use yii\widgets\ActiveForm;
                     <p class="email-click">
                         <?= $session->getFlash('registrationdone')?>
                     </p><?php
+                    $session->getFlash('registrationdone');
                         }
                    ?>
 
