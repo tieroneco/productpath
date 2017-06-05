@@ -212,8 +212,8 @@ class SiteController extends Controller {
         $model = new RegisterForm;
         $mail_sent = (bool) \yii::$app->params['mailSent'];
         if ($sitename = (\yii::$app->request->get('site'))) {
-            //$sitename = str_replace(['http://',''], $replace, $subject);
-            $model->host = $sitename;
+            $sitename = str_replace(['http://','https://', \yii::$app->params['domainName']], [''], $sitename);
+            $model->host = 'http://'.$sitename.'.'.\yii::$app->params['domainName'];
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
