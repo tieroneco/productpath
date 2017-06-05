@@ -17,19 +17,43 @@ use yii\widgets\ActiveForm;
                     <span class="toemail"><?= $session->getFlash('email') ?></span>
                     <br/>
                     <p> Please validate your email address in order to get started <p/>
-<!-- This p is experimental as the email is not working, once the email works this p will automatically removed-->
-                   <?php
-                        if($session->hasFlash('mail_sent') && $session->getFlash('mail_sent')=='No'){
-                            ?>
-                    <p class="email-click">
-                        <?= $session->getFlash('registrationdone')?>
-                    </p><?php
-                    $session->getFlash('registrationdone');
-                        }
-                   ?>
+                    <!-- This p is experimental as the email is not working, once the email works this p will automatically removed-->
+                    <?php
+                    if ($session->hasFlash('mail_sent') && $session->getFlash('mail_sent') == 'No') {
+                        ?>
+                        <p class="email-click">
+                            <?= $session->getFlash('registrationdone') ?>
+                        </p><?php
+                        $session->getFlash('registrationdone');
+                    }
+                    ?>
 
                 </div>        
-            <?php
+                <?php
+                break;
+            case 'FORGOTPASS':
+                ?>
+                <div class="reg-notice">
+                    <h3>Please check your email</h3>
+                    <p> We have sent you a reset password link at</p>
+                    <br/>
+                    <span class="toemail"><?= $session->getFlash('email') ?></span>
+                    <br/>
+                    <p> Please validate your email address in order to get started <p/>
+                    <!-- This p is experimental as the email is not working, once the email works this p will automatically removed-->
+                    <?php
+                    if ($session->hasFlash('mail_sent') && $session->getFlash('mail_sent') == 'No') {
+                        ?>
+                        <p class="email-click">
+                            <?= $session->getFlash('registrationdone') ?>
+                        </p><?php
+                        $session->getFlash('registrationdone');
+                    }
+                    ?>
+
+                </div>        
+                <?php
+                break;
         }
         ?>
     </div>

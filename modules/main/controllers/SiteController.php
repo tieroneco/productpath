@@ -12,8 +12,6 @@ use app\models\User;
 use app\models\Site;
 use \app\models\IdeaUser;
 
-
-
 class SiteController extends Controller {
 
     /**
@@ -23,28 +21,28 @@ class SiteController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout','login','register'],
+                'only' => ['logout', 'login', 'register'],
                 'rules' => [
                         [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
-                    ],[
-		'actions'=>['login','register','activate'],
-		'allow'=>true,
-		'matchCallback'=>function(){
-			if($user  = \yii::$app->User->identity){
-				$site = $user->sites;
-				if($site && isset($site[0])){
-					return $this->redirect($site[0]->subDomain.'/admin');
-				}else{
-					return $this->redirect('//'.\yii::$app->params['domainName'].'/admin');
-				}
-			}else{
-				return true;
-			}		
-		}
-		]
+                    ], [
+                        'actions' => ['login', 'register', 'activate', 'forgot-pass', 'resetpass'],
+                        'allow' => true,
+                        'matchCallback' => function() {
+                            if ($user = \yii::$app->User->identity) {
+                                $site = $user->sites;
+                                if ($site && isset($site[0])) {
+                                    return $this->redirect($site[0]->subDomain . '/admin');
+                                } else {
+                                    return $this->redirect('//' . \yii::$app->params['domainName'] . '/admin');
+                                }
+                            } else {
+                                return true;
+                            }
+                        }
+                    ]
                 ],
             ],
             'verbs' => [
@@ -70,14 +68,80 @@ class SiteController extends Controller {
             ],
         ];
     }
-    public function actionNotice(){
+
+    public function actionResetpass() {
+        $mail_sent = \yii::$app->params['mailSent'];
+        $q = \yii::$app->request->get('q');
+        if ($q) {
+            $user = User::findOne(['activationKey' => $q]);
+            if ($user) {
+                $user->activationKey = '';
+                $user->save();
+                if ($mail_sent) {
+                    try {
+                        $pass = \yii::$app->security->generateRandomString(8);
+                        $user->password = \yii::$app->security->generatePasswordHash($pass);
+                        $user->save();
+                        Yii::$app->mailer->compose('layouts/passwordautoreset', compact('pass', 'user'))
+                                ->setFrom('from@domain.com')
+                                ->setTo($user->email)
+                                ->setSubject("Password Reset: " . \yii::$app->params['domainName'])
+                                ->send();
+                        $session = \yii::$app->session;
+                        //$session->setFlash('notice', 'FORGOTPASS');
+                        //$session->setFlash('email', $model->email);
+                        return $this->redirect('/site/login');
+                    } catch (Exception $e) {
+                        $mail_sent = false;
+                    }
+                }
+            }
+        }
+    }
+
+    public function actionForgotPass() {
+        $mail_sent = \yii::$app->params['mailSent'];
         $this->layout = 'login';
-        if(\yii::$app->session->hasFlash('notice') || 1){
+
+        $model = new \app\modules\main\models\forms\ForgotPassForm();
+        if ($model->load(\yii::$app->request->post()) && $model->validate()) {
+            $user = User::findOne(['email' => $model->email]);
+            if (!$user) {
+                $model->addError('email', 'Sorry no matching user found');
+            } else if ($user->active == -1) {
+                $model->addError('email', 'User not active');
+            } else {
+                if ($mail_sent) {
+                    try {
+                        $user->activationKey = \yii::$app->security->generateRandomString();
+                        $user->save();
+                        Yii::$app->mailer->compose('layouts/forgotpassword', compact('model', 'user'))
+                                ->setFrom('from@domain.com')
+                                ->setTo($model->email)
+                                ->setSubject("Forgot Password : " . \yii::$app->params['domainName'])
+                                ->send();
+                        $session = \yii::$app->session;
+                        $session->setFlash('notice', 'FORGOTPASS');
+                        $session->setFlash('email', $model->email);
+                        return $this->redirect('notice');
+                    } catch (Exception $e) {
+                        $mail_sent = false;
+                    }
+                }
+            }
+        }
+        return $this->render('forgotpass', compact('model'));
+    }
+
+    public function actionNotice() {
+        $this->layout = 'login';
+        if (\yii::$app->session->hasFlash('notice') || 1) {
             return $this->render('notice');
-        }else{
+        } else {
             throw new \yii\web\ForbiddenHttpException('This page has been expiered');
         }
     }
+
     public function actionFbLogin() {
         \yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         if (\yii::$app->request->isPost) {
@@ -146,7 +210,7 @@ class SiteController extends Controller {
     public function actionRegister() {
         //$this->layout = 'register';
         $model = new RegisterForm;
-        $mail_sent = (bool)\yii::$app->params['mailSent'];
+        $mail_sent = (bool) \yii::$app->params['mailSent'];
         if ($sitename = (\yii::$app->request->get('site'))) {
             //$sitename = str_replace(['http://',''], $replace, $subject);
             $model->host = $sitename;
@@ -197,7 +261,6 @@ class SiteController extends Controller {
                                     ->setTo($model->email)
                                     ->setSubject("Successfull Registration At " . \yii::$app->params['domainName'])
                                     ->send();
-                            
                         } catch (Exception $e) {
                             $mail_sent = false;
                         }
@@ -210,12 +273,11 @@ class SiteController extends Controller {
                 $auth->assign($auth->getRole('admin'), $user->id);
                 $transaction->commit();
                 $session = \yii::$app->session;
-                $session->setFlash('notice','REGSUCCESS');
-                $session->setFlash('mail_sent',($mail_sent ? 'Yes' : 'No'));
-                $session->setFlash('email',$model->email);
+                $session->setFlash('notice', 'REGSUCCESS');
+                $session->setFlash('mail_sent', ($mail_sent ? 'Yes' : 'No'));
+                $session->setFlash('email', $model->email);
                 if ($mail_sent && \yii::$app->params['mailSent']) {
-                    $session->setFlash("registrationdone", "Your account has been successfully created,Please check our email");                    
-                    
+                    $session->setFlash("registrationdone", "Your account has been successfully created,Please check our email");
                 } else {
                     $session->setFlash("registrationdone", "Your account has been successfully created, Please " . '<a href="' . \yii\helpers\Url::to(['site/activate/?q=' . $user->activationKey], true) . '">Click Here '
                             . 'to activate your account</a>');
@@ -241,7 +303,7 @@ class SiteController extends Controller {
         }
         //+ as there is no redirect so reinitialize the model value
         //if (isset($session))
-            //$model = new RegisterForm;
+        //$model = new RegisterForm;
 
         return $this->render("register", compact('model'));
     }

@@ -42,13 +42,9 @@ use yii\widgets\ActiveForm;
                     
                     <div class="login creat_acc-popup">
                     	<div class="login-head">
-                                <?php
-                                    if(yii::$app->session->hasFlash('registrationdone')){
-                                        ?><h2><?= yii::$app->session->getFlash('registrationdone');?></h2>
-                                <?php    }else{
-                                ?>
+                               
                         	<h2>Create Account</h2>
-                                    <?php }?>
+                                
                         </div>
                         
                         <div class="login-footer">

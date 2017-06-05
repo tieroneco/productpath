@@ -38,7 +38,9 @@ AppAsset::register($this);
                         if (yii::$app->session->getFlash('notice')) {
                             ?>
                         <div  class="creat_acount_link"><a href="/site/login">Already a member? Sign In</a></div>
-                        <?php }else {
+                        <?php }elseif(isset($this->params['context'])) {
+                            echo $this->params['context'];
+                        }else{
                                 ?><div  class="creat_acount_link"><a href="/site/register">Create Account</a></div>
                                 <?php
                             }

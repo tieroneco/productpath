@@ -269,30 +269,27 @@ class SiteController extends Controller {
     }
 
     public function actionLogin() {
-        if (!\yii::$app->user->isGuest) {
-            return $this->redirect('/admin');
-        }
         $this->layout = 'login';
         $model = new \app\modules\main\models\forms\LoginForm();
         if ($model->Load(\yii::$app->request->post()) && $model->validate()) {
             $user = User::find()
                     ->where(['email' => $model->email])
-                    ->andWhere(['active' => 1])
                     ->one();
             if ($user) {
                 if (\yii::$app->security->validatePassword($model->password, $user->password)) {
-                    $site = $user->sites;
-                    
-                    if (isset($site[0]) && ($site = $site[0]) && $site->id == \yii::$app->params['site']->id) {
-                        //\yii::$app->user->logout();
-
+                    $role = \Yii::$app->authManager->getRolesByUser($user->id);
+                    if (isset($role['superAdmin'])) {
+                        \yii::$app->user->login($user);
+                        return $this->redirect('/admin');
+                    } elseif (isset($role['admin'])) {
+                        $site = $user->sites[0];
                         \yii::$app->user->login($user);
                         return $this->redirect(\yii\helpers\Url::to($site->subDomain . '/admin', false));
-                    }else{
-                        $model->addError('email', 'User is not associated with this site');
+                    } else {
+                        $model->addError('email', 'User is ont privilaged');
                     }
                 } else {
-                    $model->addError('email', 'User not authenitcated');
+                    $model->addError('password', 'Wrong password. Try again.');
                 }
             } else {
                 $model->addError('email', 'Not a valid user');

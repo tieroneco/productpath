@@ -94,6 +94,7 @@ use yii\widgets\ActiveForm;
                                 <?= $form->field($model,'email')->textInput()?>
                                 <?= $form->field($model,'password')->passwordInput()?>
                                 <input type="submit" value="Sign In" class="btn small-btn submit-btn pull-right">
+                                <a href="/site/forgot-pass">Forgot Password</a>
                                 <?php $form->end()?>                                
                             </div>
 
